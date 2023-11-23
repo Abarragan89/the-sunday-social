@@ -58,10 +58,17 @@ ol, ul {
 }
 
 /* /////////////////////////////////// RESET OVER ////////////////////////// */
-
+/* /////////////HOME PAGE/////////////// */
 .main-section-homepage {
   display: flex;
+  justify-content: center;
 } 
+
+.homepage-post-div {
+  flex: 2;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 .homepage-greeting {
   position: absolute;
@@ -157,8 +164,8 @@ ol, ul {
 .profile-pic {
   margin-right: 8px;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 }
 
 .toast-message {

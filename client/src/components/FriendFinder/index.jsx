@@ -2,6 +2,7 @@
 import { FaSearch } from 'react-icons/fa'
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import ConfirmModal from '../ConfirmModal';
 import { Image } from 'cloudinary-react';
 import './index.css'
 
@@ -10,6 +11,10 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
 
     const [isFindingFriend, setIsFindingFriends] = useState(false)
     const [foundUsers, setFoundUsers] = useState(null)
+    const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false)
+    const [deleteFriendId, setDeleteFriendId] = useState(null)
+    const [deleteFriendName, setDeleteFriendName] = useState(null)
+
     const inputEl = useRef(null);
 
     async function findMyFriends(value) {
@@ -83,13 +88,11 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
         }
     }
 
-
     useEffect(() => {
         inputEl.current.value = '';
         // only run findMy friends if we are in 
         if(!isFindingFriend) findMyFriends('');
-    }, [isFindingFriend, triggerRefreshInFriends])
-
+    }, [isFindingFriend, triggerRefreshInFriends, showConfirmDeleteModal])
 
 
     async function sendFriendRequestHandler(friendId) {
@@ -114,7 +117,37 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
         }
     }
 
+    async function deleteFriend() {
+        try {
+            const data = await fetch('/api/user/deleteFriend', {
+                method: 'DELETE', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId,
+                    friendId: deleteFriendId
+                })
+            })
+            const response = data.json();
+            if (!response) {
+                console.log('friendship not made')
+            }
+            setShowConfirmDeleteModal(false);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     return (
+        <>
+        {showConfirmDeleteModal &&
+            <ConfirmModal 
+                triggerModal={setShowConfirmDeleteModal}
+                data={deleteFriendName}
+                confirmFunction={deleteFriend}
+            />
+        }
         <aside className="friend-finder-aside">
             <div className='top-search-bar'>
                 <div className="friend-search-option">
@@ -168,7 +201,7 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
                                             <Link to={`/friendProfile/${user.id}`}>
                                                 Profile
                                             </Link>
-                                             <p>
+                                             <p onClick={() => {setShowConfirmDeleteModal(true); setDeleteFriendName(user.username); setDeleteFriendId(user.id)}}>
                                                 Delete
                                             </p>
                                         </>
@@ -180,6 +213,7 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
                 })}
             </div>
         </aside>
+        </>
     )
 }
 

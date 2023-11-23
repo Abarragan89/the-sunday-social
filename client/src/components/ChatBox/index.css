@@ -14,8 +14,14 @@
     color: var(--accent-color);
     display: block;
     text-decoration: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 67%;
     text-align: center;
+    z-index: 4;
     letter-spacing: 2px;
+    background-color: var(--primary-color);
     padding: 15px;
     border-bottom: 1px solid var(--black)
 }

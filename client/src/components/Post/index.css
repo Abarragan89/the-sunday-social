@@ -1,8 +1,7 @@
 .post-section {
-  width: 85%;
   min-width: 330px;
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0 auto;
   margin-top: 20px;
   border-radius: var(--border-radius);
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -28,7 +27,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
   font-size: 0.93rem;
 }
 
@@ -47,6 +46,7 @@
   font-size: 1rem;
   text-align: justify;
   overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 .post-footer {
@@ -55,7 +55,7 @@
   align-items:flex-start;
   font-size: 0.93rem;
   color: var(--accent-color);
-  padding: 10px 20px;
+  padding: 5px 20px;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 

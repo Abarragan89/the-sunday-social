@@ -7,11 +7,13 @@ import { ToastContainer, toast } from "react-toastify";
 import './index.css';
 import { Image } from 'cloudinary-react';
 
-
-function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh }) {
+// triggerRefresh is for refreshing the profile page on change
+// refresh is to refresh the post data when in view single post modal
+function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refreshMostPosts, setRefreshMostPosts }) {
     const [showModal, setShowModal] = useState(false)
     const [postData, setPostData] = useState(null)
     const [refresh, setRefresh] = useState(false);
+
 
     useEffect(() => {
         async function getPost() {
@@ -43,6 +45,7 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh }) {
                 showToastMessage(response.error)
             }
             if (response) {
+                setRefreshMostPosts(!refreshMostPosts)
                 setRefresh(!refresh)
             }
         } catch (err) {
@@ -81,7 +84,7 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh }) {
                     <div className='flex-box-sa'>
 
                         <figure>
-                            <Image width={28} alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={postData?.User?.profilePic} />
+                            <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={postData?.User?.profilePic} />
 
                         </figure>
                         <div>

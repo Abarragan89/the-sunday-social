@@ -42,6 +42,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages}) {
         setPhotoUrl(userData?.profilePic)
     }, [userData?.profilePic])
 
+    // Math.fact.missions@gmail.com is my account email with cloudinary
     async function uploadImage() {
         try {
             // set up form data

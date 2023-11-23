@@ -12,6 +12,7 @@ const {
     UserChatJunc,
     Message
 } = require('../models');
+const sequelize = require('../config/connection');
 
 // this route is just to check if user is logged in. Used in Navigation
 // and other components. no database query
@@ -88,7 +89,9 @@ router.post('/addComment', verifyToken, async (req, res) => {
         if (!newComment) {
             return res.status(400).json({ error: 'comment not added' })
         }
-
+        // increase comment count
+        post.commentCount += 1;
+        await post.save();
         res.status(200).json(newComment)
     } catch (err) {
         res.status(500).json({ error: 'comment not added' })
@@ -127,6 +130,9 @@ router.post('/addLike', verifyToken, async (req, res) => {
         if (!newLike) {
             return res.status(400).json({ error: 'comment not added' })
         }
+        // increase like count
+        post.likeCount += 1;
+        await post.save()
 
         res.status(200).json(newLike)
     } catch (err) {
@@ -293,6 +299,27 @@ router.post('/addFriend', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'internal server error', err })
     }
 });
+
+router.delete('/deleteFriend', verifyToken, async(req, res) => {
+    try {
+        const deletedFriendshipOne = await Friendship.destroy({
+            where: { user_id: req.body.userId, friend_id: req.body.friendId }
+        })  
+        
+        const deletedFriendshipTwo = await Friendship.destroy({
+            where: { user_id: req.body.friendId, friend_id: req.body.userId } 
+        })
+
+        if (!deletedFriendshipOne || !deletedFriendshipTwo) {
+            return res.status(400).json({ error: 'friendship not deleted'})
+        }
+
+        res.status(200).json({ message: 'friendship deleted'})
+
+    } catch(err) {
+        res.status(500).json(err)
+    }
+})
 
 router.post('/sendFriendRequest', verifyToken, async (req, res) => {
     try {

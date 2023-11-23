@@ -18,6 +18,7 @@
     line-height: 1.2;
     font-size: .98rem;
     word-break: break-word;
+    white-space: pre-wrap;
 }
 
 .comment-textarea-div {
@@ -75,12 +76,13 @@
 }
 
 
-
 .comment-section-div {
     margin-top: 20px;
     padding-top: 10px;
     font-size: .95rem;
     border-top: 1px solid var(--accent-color);
+    white-space: pre-wrap;
+    line-height: 1.2;
 }
 .user-comment-info, .post-modal-user-info {
     font-size: .93rem;
@@ -93,13 +95,14 @@
 }
 
 .single-comment-div {
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     padding: 0 10px;
 }
 
 .single-comment {
     padding: 5px;
     padding-top: 0;
+    margin-left: 15px;
 }
 
 

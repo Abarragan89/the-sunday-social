@@ -50,19 +50,8 @@ function FriendPage() {
                 />
             </main>
 
-
-
-
-            <p>Delete Friend</p>
-            <p>Highlight active message</p>
-            <p>title for message text area</p>
-            <p>When user puts a new image, old one is erased</p>
             <p>Most talkedabout and most liked</p>
             <p>Socket Io for automatic refresh and notfications</p>
-
-
-
-
         </main>
 
     )

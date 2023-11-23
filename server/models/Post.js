@@ -27,6 +27,16 @@ Post.init(
                 key: 'id'
             }
         },
+        likeCount: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        commentCount: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        }
     },
     {
         sequelize,

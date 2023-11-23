@@ -1,16 +1,29 @@
 /* eslint-disable react/prop-types */
 import { IoMdSend } from 'react-icons/io'
 import { useEffect, useState } from 'react';
-import { formatDate } from '../../utils/formatDate'
+import { formatDate } from '../../utils/formatDate';
+import { Image } from 'cloudinary-react';
 import './index.css';
 
-function ViewPostModal({ triggerModal, postId, postRefresh, postStatus, isInEditMode, setTriggerRefresh, triggerRefresh }) {
+// all these refreshes refresh different components
+function ViewPostModal({ 
+    triggerModal, 
+    postId, 
+    postRefresh, 
+    postStatus, 
+    isInEditMode, 
+    setTriggerRefresh, 
+    triggerRefresh, 
+    refreshMostPosts, 
+    setRefreshMostPosts 
+}) {
 
     const [postData, setPostData] = useState(null);
     const [updatedPostText, setUpdatedPostText] = useState('');
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
     const [confirmDeletePost, setConfirmDeletePost] = useState(false);
     const [refresh, setRefresh] = useState(false);
+
 
     useEffect(() => {
         async function getUserData() {
@@ -51,7 +64,8 @@ function ViewPostModal({ triggerModal, postId, postRefresh, postStatus, isInEdit
             if (response) {
                 setRefresh(!refresh);
                 setCommentText('');
-                postRefresh(!postStatus);
+                // refreshes the post in Post component OR the Most Post
+                postRefresh ? postRefresh(!postStatus) : setRefreshMostPosts(!refreshMostPosts);
             }
         } catch (err) {
             console.log('comment not added ', err);
@@ -108,6 +122,7 @@ function ViewPostModal({ triggerModal, postId, postRefresh, postStatus, isInEdit
         }
     }
 
+
     return (
         <section onClick={() => {triggerModal(false)}} className='modal-container'>
             <div onClick={(e) => e.stopPropagation()} className='modal'>
@@ -136,7 +151,7 @@ function ViewPostModal({ triggerModal, postId, postRefresh, postStatus, isInEdit
                     <>
                         <div className='post-modal-user-info'>
                             <div className='flex-box'>
-                                <figure><img src='/logo.png' width={33} alt='user profile picture' className='profile-pic' /></figure>
+                                <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={postData?.User?.profilePic} />
                                 <div>
                                     <p>{postData?.author}</p>
                                     <p>{formatDate(postData?.createdAt)}</p>
@@ -162,7 +177,9 @@ function ViewPostModal({ triggerModal, postId, postRefresh, postStatus, isInEdit
                                 <div key={index} className='single-comment-div'>
                                     <div className='user-comment-info'>
                                         <div className='flex-box'>
-                                            <figure><img src='/logo.png' width={23} alt='user profile picture' className='profile-pic' /> </figure>
+                                        <figure>
+                                        <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={comment?.User?.profilePic} />
+                                        </figure>
                                             <div>
                                                 <p>{comment?.User?.username}</p>
                                                 <p>{formatDate(comment?.createdAt)}</p>
