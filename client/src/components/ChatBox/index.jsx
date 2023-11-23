@@ -50,10 +50,9 @@ function ChatBox({
 
     useEffect(() => {
         getChatrooms();
-        // if (chatId) {
         getMessages(chatId);
         socket.emit('join_room', chatId)
-        // }
+        // leave room so messages don't render if you switch chat channel!!!!
         return () => {
             socket.emit('leave_room', chatId);
         };
@@ -93,8 +92,7 @@ function ChatBox({
         // and in turn trigger the recieved_message and trigger reload of messages
         socket.on('recieve_message', (data) => {
             getMessages(data.chatId);
-            socket.emit('leave_room', data.chatId);
-            
+            // leave room so messages don't render if you switch chat channel!!!!
         })
     }, [socket])
 
