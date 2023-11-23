@@ -522,12 +522,12 @@ router.post('/createChatRoom', verifyToken, async (req, res) => {
 })
 
 // this route checks to see if two users already have a chatroom going
-router.get('/doesChatRoomExist/:userId/:friendId', verifyToken, async (req, res) => {
+router.get('/doesChatRoomExist/:friendId', verifyToken, async (req, res) => {
     try {
         // get all the Junction tables that belong to the user
         // and save all the chatroomIds
         const chatRoomsCreatedByUser = await UserChatJunc.findAll({
-            where: { userId: req.params.userId},
+            where: { userId: req.user.data.id},
         });
 
         const chatroomIds = chatRoomsCreatedByUser.map((chatroom) => chatroom.chatRoomId)

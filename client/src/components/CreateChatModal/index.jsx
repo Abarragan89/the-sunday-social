@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import './index.css';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { Image } from 'cloudinary-react';
+import './index.css';
 
 function CreateChatModal({ triggerModal }) {
+    const navigate = useNavigate();
 
     const showToastMessage = (errorMsg, toastId) => {
         toast.error(errorMsg, {
@@ -39,14 +41,33 @@ function CreateChatModal({ triggerModal }) {
         findMyFriends()
     }, [])
 
-    
+    async function checkIfChatExists() {
+        try {
+            // check to see if there is already a chat
+            const data = await fetch(`/api/user/doesChatRoomExist/${userIdsForChatRoom[0]}`);
+            const response = await data.json();
+            // redirect if there is a response with chatID
+            if (response) {
+                navigate(`/messages/${response}`)
+                triggerModal(false);
+                return true;
+            }
+            return false;
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
+    
 
     async function makeChatRoom(e) {
         e.preventDefault();
         if (userIdsForChatRoom.length === 0) {
             showToastMessage('Please select recipient(s)')
             return;
+        } else if (userIdsForChatRoom.length === 1) {
+            // check if chat exists and redirect them if so
+            if (checkIfChatExists()) return
         }
         try {
             const data = await fetch('/api/user/createChatRoom', {
@@ -60,7 +81,7 @@ function CreateChatModal({ triggerModal }) {
                 })
             })
             const response = await data.json();
-            if(!response) {
+            if (!response) {
                 console.log('error')
             }
             triggerModal(false);
@@ -71,11 +92,11 @@ function CreateChatModal({ triggerModal }) {
 
     function addUserIdHandler(e) {
         // remove any undefined
-        if(e.target.value === undefined) return;
+        if (e.target.value === undefined) return;
         // remove item if it is already in the arry
         if (userIdsForChatRoom.includes(e.target.value)) {
             setUsersIdsForChatRoom(prevArrary => prevArrary.filter(item => item !== e.target.value))
-        // else add it to the array
+            // else add it to the array
         } else {
             setUsersIdsForChatRoom(prevArrary => [...prevArrary, parseInt(e.target.value)])
         }

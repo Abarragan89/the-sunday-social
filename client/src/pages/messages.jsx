@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import CreateChatModal from "../components/CreateChatModal";
 import ChatBox from "../components/ChatBox";
 
 
-function Messages() {
+function Messages({triggerRefreshAmongPages }) {
     // these two use state variable are paired with the floating button
     const [showCreateChatModal, setShowCreateChatModal] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -33,6 +34,7 @@ function Messages() {
                 username={userData?.username}
                 userId={userData?.id}
                 triggerModalStatus={showCreateChatModal}
+                triggerRefreshAmongPages={triggerRefreshAmongPages}
             />
         </main>
 

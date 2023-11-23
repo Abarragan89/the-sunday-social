@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import AddPostModal from "../components/AddPostModal";
 import FloatingButton from "../components/FloatingBtn";
 import FriendFinder from "../components/FriendFinder";
 import FriendRequests from "../components/FriendRequests";
 
-function FriendPage() {
+function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
 
     // these two use state variable are paired with the floating button
     const [showAddPostModal, setShowAddPostModal] = useState(false)
@@ -21,7 +22,7 @@ function FriendPage() {
 
         getUserData();
     }, [showAddPostModal])
-    
+
     return (
         <main>
             {showAddPostModal &&
@@ -42,6 +43,8 @@ function FriendPage() {
                     setTriggerRefreshInFriends={setTriggerRefreshInFriends}
                     triggerRefreshInFriends={triggerRefreshInFriends}
                     userId={userData?.id}
+                    triggerRefreshAmongPages={triggerRefreshAmongPages}
+                    setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
                 />
 
                 <FriendRequests

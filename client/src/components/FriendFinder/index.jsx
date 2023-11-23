@@ -6,7 +6,13 @@ import ConfirmModal from '../ConfirmModal';
 import { Image } from 'cloudinary-react';
 import './index.css'
 
-function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, userId}) {
+function FriendFinder({ 
+    setTriggerRefreshInFriends, 
+    triggerRefreshInFriends, 
+    userId, 
+    triggerRefreshAmongPages, 
+    setTriggerRefreshAmongPages
+}) {
     const navigate = useNavigate();
 
     const [isFindingFriend, setIsFindingFriends] = useState(false)
@@ -53,10 +59,11 @@ function FriendFinder({ setTriggerRefreshInFriends, triggerRefreshInFriends, use
     async function sendMessageToFriend(friendId) {
         try{
             // check to see if there is already a chat
-            const data = await fetch(`/api/user/doesChatRoomExist/${userId}/${friendId}`);
+            const data = await fetch(`/api/user/doesChatRoomExist/${friendId}`);
             const response = await data.json();
             // redirect if there is a response with chatID
             if (response) { 
+                setTriggerRefreshAmongPages(!triggerRefreshAmongPages)
                 navigate(`/messages/${response}`)
             } else {
                 makeChatRoom(friendId)

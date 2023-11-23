@@ -8,7 +8,12 @@ import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
 import './index.css'
 
-function ChatBox({ username, userId, triggerModalStatus }) {
+function ChatBox({ 
+    username, 
+    userId, 
+    triggerModalStatus, 
+    triggerRefreshAmongPages, 
+}) {
 
     const navigate = useNavigate();
     const { chatId } = useParams();
@@ -46,7 +51,7 @@ function ChatBox({ username, userId, triggerModalStatus }) {
     useEffect(() => {
         getMessages();
         getChatrooms();
-    }, [userId, chatId, triggerModalStatus])
+    }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages])
 
 
     async function addMessage() {
@@ -99,7 +104,7 @@ function ChatBox({ username, userId, triggerModalStatus }) {
                 <ul>
                     {/* sort the chat boxes by last updated so most relevant is on top */}
                     <a href="#" className="messages-title"><li>Messages</li></a>
-                    {allChatrooms && allChatrooms?.ChatRoom?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((chatroom, index) => {
+                    {allChatrooms && allChatrooms.ChatRoom.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((chatroom, index) => {
                         return (
                             <Link
                                 className={`chat-aside-link ${chatId == chatroom.id ? 'active-chat' : ''}`}
@@ -107,7 +112,7 @@ function ChatBox({ username, userId, triggerModalStatus }) {
                                 to={`/messages/${chatroom.id}`}
                             >
                                 {/* Only show the names that aren't the logged in user */}
-                                <li>{chatroom.chatRoomName.split(', ').filter(item => item !== username).join(',')}</li>
+                                <li>{chatroom.chatRoomName.split(', ').filter(item => item !== username).join(', ')}</li>
                             </Link>
                         )
                     })}

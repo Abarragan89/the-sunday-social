@@ -48,6 +48,10 @@
     padding: 15px;
     border-bottom: 1px solid var(--black)
 }
+.chatbox-aside ul {
+    margin-top: 48px;
+}
+
 
 .chatbox-aside .chat-aside-link:hover {
     cursor: pointer;
