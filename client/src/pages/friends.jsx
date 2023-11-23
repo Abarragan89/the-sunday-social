@@ -52,9 +52,10 @@ function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
                     triggerRefreshInFriends={triggerRefreshInFriends}
                 />
             </main>
-            <p>Socket Io for automatic refresh and notfications</p>
-            <p>making a new message from friends needs to refresh friends list</p>
-            <p>making new chat from modal will make new chat with single user even if it already exists</p>
+            <p>Hover over message aside to show all users</p>
+            <p>change default photo google</p>
+            <p>Notifications with socket io in messages</p>
+            <p>Heroku</p>
         </main>
 
     )

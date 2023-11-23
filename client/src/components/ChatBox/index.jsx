@@ -8,11 +8,11 @@ import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
 import './index.css'
 
-function ChatBox({ 
-    username, 
-    userId, 
-    triggerModalStatus, 
-    triggerRefreshAmongPages, 
+function ChatBox({
+    username,
+    userId,
+    triggerModalStatus,
+    triggerRefreshAmongPages,
 }) {
 
     const navigate = useNavigate();
@@ -23,7 +23,7 @@ function ChatBox({
 
     const messageTextArea = useRef(null);
 
-    async function getMessages() {
+    async function getMessages(chatId) {
         try {
             const data = await fetch(`/api/user/getChatMessages/${chatId}`)
             const response = await data.json();
@@ -49,9 +49,15 @@ function ChatBox({
 
 
     useEffect(() => {
-        getMessages();
         getChatrooms();
-    }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages])
+        // if (chatId) {
+        getMessages(chatId);
+        socket.emit('join_room', chatId)
+        // }
+        return () => {
+            socket.emit('leave_room', chatId);
+        };
+    }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages,])
 
 
     async function addMessage() {
@@ -65,7 +71,6 @@ function ChatBox({
                     messageText,
                     chatroomId: chatId,
                     sender: username
-
                 })
             });
             const response = data.json();
@@ -73,10 +78,10 @@ function ChatBox({
                 console.log(' error sending message ')
             }
             setMessageText('');
-            getMessages();
+            getMessages(chatId);
             scrollToBottom();
             // Socket io emit to render automatically
-            socket.emit('send_message', { message: 'hello'})
+            socket.emit('send_message', { data, chatId })
         } catch (err) {
             console.log(err)
         }
@@ -84,8 +89,12 @@ function ChatBox({
 
     useEffect(() => {
         // eslint-disable-next-line no-unused-vars
+        // This use effect will trigger when we emit send_message
+        // and in turn trigger the recieved_message and trigger reload of messages
         socket.on('recieve_message', (data) => {
-            getMessages();
+            getMessages(data.chatId);
+            socket.emit('leave_room', data.chatId);
+            
         })
     }, [socket])
 

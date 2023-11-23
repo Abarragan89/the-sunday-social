@@ -23,9 +23,22 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 
-  socket.on('send_message', (data) => {
-    socket.broadcast.emit('recieve_message', data)
+  // set a join room event. The front end will first join room 
+  socket.on('join_room', (data) => {
+    socket.join(data)
   })
+
+  socket.on('leave_room', (chatId) => {
+    socket.leave(chatId)
+  })
+
+  // the 'send_message' will be called at the end of the send message route 
+  socket.on('send_message', (data) => {
+    // the recieved_message event will have a call back function that will
+    // call getMessages() to rerender the messages on the user side
+    socket.to(data.chatId).emit('recieve_message', data)
+  })
+
 })
 
 
