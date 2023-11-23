@@ -4,6 +4,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { formatDateShortYear } from "../../utils/formatDate";
 import { getTime } from "../../utils/formatDate";
 import { IoMdSend } from 'react-icons/io'
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3001');
 import './index.css'
 
 function ChatBox({ username, userId, triggerModalStatus }) {
@@ -37,7 +39,7 @@ function ChatBox({ username, userId, triggerModalStatus }) {
 
     // open latest chat as soon as page loads
     if (!chatId && allChatrooms) {
-        navigate(`/messages/${allChatrooms.ChatRoom[0].id}`)
+        navigate(`/messages/${allChatrooms.ChatRoom[0]?.id}`)
     }
 
 
@@ -68,10 +70,19 @@ function ChatBox({ username, userId, triggerModalStatus }) {
             setMessageText('');
             getMessages();
             scrollToBottom();
+            // Socket io emit to render automatically
+            socket.emit('send_message', { message: 'hello'})
         } catch (err) {
             console.log(err)
         }
     }
+
+    useEffect(() => {
+        // eslint-disable-next-line no-unused-vars
+        socket.on('recieve_message', (data) => {
+            getMessages();
+        })
+    }, [socket])
 
     useEffect(scrollToBottom)
 
@@ -96,7 +107,7 @@ function ChatBox({ username, userId, triggerModalStatus }) {
                                 to={`/messages/${chatroom.id}`}
                             >
                                 {/* Only show the names that aren't the logged in user */}
-                                <li>{chatroom.chatRoomName.split(',').filter(item => item !== username).join(',')}</li>
+                                <li>{chatroom.chatRoomName.split(', ').filter(item => item !== username).join(',')}</li>
                             </Link>
                         )
                     })}

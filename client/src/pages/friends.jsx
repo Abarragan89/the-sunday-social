@@ -49,9 +49,9 @@ function FriendPage() {
                     triggerRefreshInFriends={triggerRefreshInFriends}
                 />
             </main>
-
-            <p>Most talkedabout and most liked</p>
             <p>Socket Io for automatic refresh and notfications</p>
+            <p>making a new message from friends needs to refresh friends list</p>
+            <p>making new chat from modal will make new chat with single user even if it already exists</p>
         </main>
 
     )

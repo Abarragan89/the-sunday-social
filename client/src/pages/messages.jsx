@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import CreateChatModal from "../components/CreateChatModal";
 import ChatBox from "../components/ChatBox";
 
+
 function Messages() {
     // these two use state variable are paired with the floating button
     const [showCreateChatModal, setShowCreateChatModal] = useState(false);

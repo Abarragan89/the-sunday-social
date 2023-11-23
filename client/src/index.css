@@ -374,6 +374,7 @@ ol, ul {
 .friend-page-main {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 #create-chatroom-btn {
