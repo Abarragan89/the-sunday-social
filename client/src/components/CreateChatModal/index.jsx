@@ -47,19 +47,18 @@ function CreateChatModal({ triggerModal }) {
             const data = await fetch(`/api/user/doesChatRoomExist/${userIdsForChatRoom[0]}`);
             const response = await data.json();
             // redirect if there is a response with chatID
+            console.log(response)
             if (response) {
                 navigate(`/messages/${response}`)
                 triggerModal(false);
-                return true;
             }
-            return false;
+            return response
         } catch (err) {
             console.log(err)
         }
     }
 
     
-
     async function makeChatRoom(e) {
         e.preventDefault();
         if (userIdsForChatRoom.length === 0) {
@@ -67,7 +66,7 @@ function CreateChatModal({ triggerModal }) {
             return;
         } else if (userIdsForChatRoom.length === 1) {
             // check if chat exists and redirect them if so
-            if (checkIfChatExists()) return
+            if (await checkIfChatExists()) return
         }
         try {
             const data = await fetch('/api/user/createChatRoom', {

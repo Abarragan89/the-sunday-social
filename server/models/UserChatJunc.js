@@ -32,6 +32,11 @@ UserChatJunc.init(
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
+        notifications: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
+        }
     }, 
     {
         sequelize,

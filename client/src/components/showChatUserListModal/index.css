@@ -1,0 +1,13 @@
+.chat-user-list {
+    font-size: 1.15rem;
+    letter-spacing: 1px;
+    margin: 0 auto;
+    margin-top: -10px;
+    margin-bottom: 35px;
+    text-align: center;
+    color: var(--accent-color);
+}
+
+.chat-user-list li {
+    margin-bottom: 10px;
+}

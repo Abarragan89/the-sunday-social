@@ -540,11 +540,11 @@ router.get('/doesChatRoomExist/:friendId', verifyToken, async (req, res) => {
                 isGroupChat: false
             },
         });
-
+  
         // if there is no chat, creat Chat
         if (isThereChat.length === 0) {
             // return false if there is no match
-            res.status(200).json(false)
+            return res.status(200).json(false)
         } else {
             // return the chatroom id if it exists
             res.status(200).json(isThereChat[0].chatRoomId)
@@ -563,7 +563,7 @@ router.get('/getAllChatrooms/:userId', verifyToken, async (req, res) => {
                     model: ChatRoom,
                     as: 'ChatRoom',
                     through: UserChatJunc,
-                    attributes: ['id', 'chatRoomName', 'notifications', 'updatedAt'],
+                    attributes: ['id', 'chatRoomName', 'updatedAt', 'isGroupChat'],
                     include: [
                         {
                             model: User,
@@ -612,6 +612,45 @@ router.post('/createNewMessage', verifyToken, async (req, res) => {
     }
 })
 
-router.get('/')
+// add the chatroom Notification for only one user
+// notification property will be on the UserChatJunc table
+router.post('/addNotification', async(req, res) => {
+    try {
+        const UserChatJuncRow = await UserChatJunc.findOne({
+            where: { userId: req.body.userId, chatRoomId: req.body.chatId }
+        })
+
+        if (!UserChatJuncRow) {
+            return res.status(400).json({ error: 'could not add notification'})
+        }
+
+        UserChatJuncRow.notifications += 1;
+        await UserChatJuncRow.save();
+        res.status(200).json(UserChatJuncRow)
+    } catch(err) {
+        res.status(500).json(err)
+    }
+})
+
+// this will run when a user opens a chat. We can get the chatID and 
+// use it with the logged in user to remove all notifications everytime 
+// they view that channel
+router.post('/removeAllNotificationsFromUserChat', async(req, res) => {
+    try {
+        const UserChatJuncRow = await UserChatJunc.findOne({
+            where: { userId: req.body.userId, chatRoomId: req.body.chatId}
+        })
+
+        if (!UserChatJuncRow) {
+            return res.status(400).json({ error: 'could not add notification'})
+        }
+
+        UserChatJuncRow.notifications = 0;
+        await UserChatJuncRow.save();
+        res.status(200).json(UserChatJuncRow)
+    } catch(err) {
+        console.log(err)
+    }
+})
 
 module.exports = router;

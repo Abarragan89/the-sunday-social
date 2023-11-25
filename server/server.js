@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
   socket.on('join_room', (data) => {
     socket.join(data)
   })
-
+  // set a leave room event
   socket.on('leave_room', (chatId) => {
     socket.leave(chatId)
   })

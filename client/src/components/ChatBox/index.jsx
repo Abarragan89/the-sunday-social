@@ -2,8 +2,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { formatDateShortYear } from "../../utils/formatDate";
+import ShowChatUserListModal from "../showChatUserListModal";
 import { getTime } from "../../utils/formatDate";
-import { IoMdSend } from 'react-icons/io'
+import { IoMdSend, IoIosMore } from 'react-icons/io'
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
 import './index.css'
@@ -20,6 +21,8 @@ function ChatBox({
     const [allMessages, setAllMessage] = useState(null);
     const [allChatrooms, setAllChatrooms] = useState(null);
     const [messageText, setMessageText] = useState('');
+    const [showChatUserList, setShowChatUserList] = useState(false);
+    const [currentChatUserList, setCurrentChatUserList] = useState(null)
 
     const messageTextArea = useRef(null);
 
@@ -41,6 +44,8 @@ function ChatBox({
             console.log('error getting messages ', err)
         }
     }
+
+
 
     // open latest chat as soon as page loads
     if (!chatId && allChatrooms) {
@@ -105,22 +110,40 @@ function ChatBox({
         }
     }
 
+    function showAllUsersInChat(e, users) {
+        e.stopPropagation();
+        setCurrentChatUserList(users)
+        setShowChatUserList(true)
+    }
+
+
     return (
         <section className="chatbox-main-section">
             <aside className="chatbox-aside">
-                <ul>
+                {showChatUserList && 
+                    <ShowChatUserListModal 
+                        triggerModal={setShowChatUserList}
+                        data={currentChatUserList}
+                        username={username}
+                    />
+                }
+                <ul className="aside-ul-list">
                     {/* sort the chat boxes by last updated so most relevant is on top */}
                     <a href="#" className="messages-title"><li>Messages</li></a>
                     {allChatrooms && allChatrooms.ChatRoom.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((chatroom, index) => {
                         return (
-                            <Link
-                                className={`chat-aside-link ${chatId == chatroom.id ? 'active-chat' : ''}`}
-                                key={index}
-                                to={`/messages/${chatroom.id}`}
-                            >
-                                {/* Only show the names that aren't the logged in user */}
-                                <li>{chatroom.chatRoomName.split(', ').filter(item => item !== username).join(', ')}</li>
-                            </Link>
+                            <div key={index} className="link-container">
+                                <Link
+                                    className={`chat-aside-link ${chatId == chatroom.id ? 'active-chat' : ''}`}
+                                    to={`/messages/${chatroom.id}`}
+                                >
+                                    {/* Only show the names that aren't the logged in user */}
+                                    <li>{chatroom.chatRoomName.split(', ').filter(item => item !== username).join(', ')}</li>
+
+                                    {/* these two will be the  button to show all users*/}
+                                </Link>
+                                {chatroom.isGroupChat && <IoIosMore onClick={(e) => showAllUsersInChat(e, chatroom.chatRoomName)} className="showAllUsersInChat" />}
+                            </div>
                         )
                     })}
                 </ul>

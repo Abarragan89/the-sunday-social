@@ -38,18 +38,38 @@
     width: 0px;
 }
 
+.link-container {
+    position: relative;
+}
+
+.chatbox-aside .aside-ul-list {
+    margin-top: 48px;
+    display: block;
+}
 .chatbox-aside a:first-child {
     border-top: 1px solid var(--black);
 }
 .chatbox-aside .chat-aside-link{
     display: block;
     text-decoration: none;
+    position: relative;
     color: var(--off-white);
-    padding: 15px;
-    border-bottom: 1px solid var(--black)
+    padding: 7px;
+    padding-right: 45px;
+    line-height: 1.2;
+    min-height: 45px;
+    max-height: 45px;
+    word-break: keep-all;
+    overflow: hidden;
+    border-bottom: 1px solid var(--black);
 }
-.chatbox-aside ul {
-    margin-top: 48px;
+
+.showAllUsersInChat {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 8px;
+    right: 7px;
+    z-index:20;
 }
 
 
