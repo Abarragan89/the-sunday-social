@@ -46,9 +46,7 @@
     margin-top: 48px;
     display: block;
 }
-.chatbox-aside a:first-child {
-    border-top: 1px solid var(--black);
-}
+
 .chatbox-aside .chat-aside-link{
     display: block;
     text-decoration: none;
@@ -80,6 +78,19 @@
 
 .chatbox-aside .active-chat {
    background-color: var(--secondary-color);
+}
+
+.notification-bubble-in-message-aside {
+    position: absolute;
+    width: 25px;
+    color: var(--off-white);
+    text-align: center;
+    padding: 3px 5px;
+    top: 3px;
+    right: 5px;
+    background-color: red;
+    border-radius: 40%;
+    z-index: 30;
 }
 
 .message-text-screen {

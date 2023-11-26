@@ -45,27 +45,68 @@ function ChatBox({
         }
     }
 
-
-
     // open latest chat as soon as page loads
     if (!chatId && allChatrooms) {
         navigate(`/messages/${allChatrooms.ChatRoom[0]?.id}`)
     }
 
+    async function removeAllNotifications(chatId) {
+        try {
+            const data = await fetch('/api/user/removeAllNotificationsFromUserChat', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }, 
+                body: JSON.stringify({
+                    userId,
+                    chatId
+                })
+            })
+            const response = await data.json();
+            if (!response) {
+                console.log('could not remove notifications')
+            }
+            await getChatrooms();
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
     useEffect(() => {
-        getChatrooms();
+        removeAllNotifications(chatId);
         getMessages(chatId);
         socket.emit('join_room', chatId)
         // leave room so messages don't render if you switch chat channel!!!!
         return () => {
             socket.emit('leave_room', chatId);
         };
-    }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages,])
+    }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages])
+
+    async function addNotification (chatId) {
+        try {
+            const data = await fetch(`/api/user/addNotification`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }, 
+                body: JSON.stringify({
+                    userId,
+                    chatId
+                })
+            })
+            const response = await data.json();
+            if (response) {
+                getChatrooms();
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
 
     async function addMessage() {
         try {
+            if (messageText.trim() === '') return;
             const data = await fetch('/api/user/createNewMessage', {
                 method: 'POST',
                 headers: {
@@ -77,13 +118,16 @@ function ChatBox({
                     sender: username
                 })
             });
-            const response = data.json();
+            const response = await data.json();
             if (!response) {
                 console.log(' error sending message ')
             }
             setMessageText('');
             getMessages(chatId);
             scrollToBottom();
+            removeAllNotifications(chatId);
+            // only add notification if user is not in the same chat
+            await addNotification(chatId);
             // Socket io emit to render automatically
             socket.emit('send_message', { data, chatId })
         } catch (err) {
@@ -95,9 +139,8 @@ function ChatBox({
         // eslint-disable-next-line no-unused-vars
         // This use effect will trigger when we emit send_message
         // and in turn trigger the recieved_message and trigger reload of messages
-        socket.on('recieve_message', (data) => {
-            getMessages(data.chatId);
-            // leave room so messages don't render if you switch chat channel!!!!
+        socket.on('recieve_message', async (data) => {
+            await getMessages(data.chatId);
         })
     }, [socket])
 
@@ -116,6 +159,7 @@ function ChatBox({
         setShowChatUserList(true)
     }
 
+    console.log(allChatrooms)
 
     return (
         <section className="chatbox-main-section">
@@ -130,10 +174,11 @@ function ChatBox({
                 <ul className="aside-ul-list">
                     {/* sort the chat boxes by last updated so most relevant is on top */}
                     <a href="#" className="messages-title"><li>Messages</li></a>
-                    {allChatrooms && allChatrooms.ChatRoom.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((chatroom, index) => {
+                    {allChatrooms && allChatrooms?.ChatRoom.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)).map((chatroom, index) => {
                         return (
                             <div key={index} className="link-container">
                                 <Link
+                                    onClick={() => {setMessageText(''); removeAllNotifications(chatId)}}
                                     className={`chat-aside-link ${chatId == chatroom.id ? 'active-chat' : ''}`}
                                     to={`/messages/${chatroom.id}`}
                                 >
@@ -142,6 +187,8 @@ function ChatBox({
 
                                     {/* these two will be the  button to show all users*/}
                                 </Link>
+                                {/* {chatroom?.UserChatJunc?.notifications > 0 && chatroom.id != chatId && <p className="notification-bubble-in-message-aside">{chatroom.UserChatJunc.notifications}</p>} */}
+                                {chatroom?.UserChatJunc?.notifications > 0 && <p className="notification-bubble-in-message-aside">{chatroom.UserChatJunc.notifications}</p>}
                                 {chatroom.isGroupChat && <IoIosMore onClick={(e) => showAllUsersInChat(e, chatroom.chatRoomName)} className="showAllUsersInChat" />}
                             </div>
                         )

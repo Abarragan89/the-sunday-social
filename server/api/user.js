@@ -300,23 +300,23 @@ router.post('/addFriend', verifyToken, async (req, res) => {
     }
 });
 
-router.delete('/deleteFriend', verifyToken, async(req, res) => {
+router.delete('/deleteFriend', verifyToken, async (req, res) => {
     try {
         const deletedFriendshipOne = await Friendship.destroy({
             where: { user_id: req.body.userId, friend_id: req.body.friendId }
-        })  
-        
+        })
+
         const deletedFriendshipTwo = await Friendship.destroy({
-            where: { user_id: req.body.friendId, friend_id: req.body.userId } 
+            where: { user_id: req.body.friendId, friend_id: req.body.userId }
         })
 
         if (!deletedFriendshipOne || !deletedFriendshipTwo) {
-            return res.status(400).json({ error: 'friendship not deleted'})
+            return res.status(400).json({ error: 'friendship not deleted' })
         }
 
-        res.status(200).json({ message: 'friendship deleted'})
+        res.status(200).json({ message: 'friendship deleted' })
 
-    } catch(err) {
+    } catch (err) {
         res.status(500).json(err)
     }
 })
@@ -476,13 +476,13 @@ router.get('/getFriendInfo/:friendId', verifyToken, async (req, res) => {
 
 // Create a chatroom
 router.post('/createChatRoom', verifyToken, async (req, res) => {
-    try {   
+    try {
         const isGroupChat = req.body.userIdsForChatRoom.length > 1 ? true : false
 
         const allUsersIds = [...req.body.userIdsForChatRoom, req.user.data.id]
 
         const allUsers = await User.findAll({
-            where: { id: { [Op.in]: allUsersIds} },
+            where: { id: { [Op.in]: allUsersIds } },
             attributes: ['username'],
             raw: true
         })
@@ -494,11 +494,11 @@ router.post('/createChatRoom', verifyToken, async (req, res) => {
             chatRoomName: userNamesAsString,
             isGroupChat: isGroupChat
         });
-        
+
         if (!newChatRoom) {
             return res.status(400).json({ error: 'chatroom not created' })
         }
-        
+
         // get all the user ids that will be in here
         const userIdArray = [...req.body.userIdsForChatRoom, req.user.data.id]
         // loop through each userID and create a new row in the User Junc table
@@ -527,20 +527,20 @@ router.get('/doesChatRoomExist/:friendId', verifyToken, async (req, res) => {
         // get all the Junction tables that belong to the user
         // and save all the chatroomIds
         const chatRoomsCreatedByUser = await UserChatJunc.findAll({
-            where: { userId: req.user.data.id},
+            where: { userId: req.user.data.id },
         });
 
         const chatroomIds = chatRoomsCreatedByUser.map((chatroom) => chatroom.chatRoomId)
-        
+
         // try to find userJunct with friend ID and these chatroomIds
         const isThereChat = await UserChatJunc.findAll({
-            where: { 
+            where: {
                 userId: req.params.friendId,
-                chatRoomId:{ [Op.in]: chatroomIds },
+                chatRoomId: { [Op.in]: chatroomIds },
                 isGroupChat: false
             },
         });
-  
+
         // if there is no chat, creat Chat
         if (isThereChat.length === 0) {
             // return false if there is no match
@@ -562,13 +562,17 @@ router.get('/getAllChatrooms/:userId', verifyToken, async (req, res) => {
                 {
                     model: ChatRoom,
                     as: 'ChatRoom',
-                    through: UserChatJunc,
                     attributes: ['id', 'chatRoomName', 'updatedAt', 'isGroupChat'],
+                    through: {
+                        attributes: ['notifications']
+                    },
                     include: [
                         {
                             model: User,
                             as: 'User',
-                            through: UserChatJunc,
+                            through: {
+                                attributes: []
+                            },
                             attributes: ['id', 'username', 'profilePic']
                         }
                     ]
@@ -614,20 +618,26 @@ router.post('/createNewMessage', verifyToken, async (req, res) => {
 
 // add the chatroom Notification for only one user
 // notification property will be on the UserChatJunc table
-router.post('/addNotification', async(req, res) => {
+router.put('/addNotification', verifyToken, async (req, res) => {
     try {
-        const UserChatJuncRow = await UserChatJunc.findOne({
-            where: { userId: req.body.userId, chatRoomId: req.body.chatId }
+        const UserChatJuncRow = await UserChatJunc.findAll({
+            where: {
+                userId: {
+                    [Op.not]: req.body.userId
+                },
+                chatRoomId: req.body.chatId
+            }
         })
 
         if (!UserChatJuncRow) {
-            return res.status(400).json({ error: 'could not add notification'})
+            return res.status(400).json({ error: 'could not add notification' })
         }
-
-        UserChatJuncRow.notifications += 1;
-        await UserChatJuncRow.save();
+        UserChatJuncRow.forEach(async (row) => {
+            row.notifications += 1;
+            await row.save();
+        })
         res.status(200).json(UserChatJuncRow)
-    } catch(err) {
+    } catch (err) {
         res.status(500).json(err)
     }
 })
@@ -635,20 +645,20 @@ router.post('/addNotification', async(req, res) => {
 // this will run when a user opens a chat. We can get the chatID and 
 // use it with the logged in user to remove all notifications everytime 
 // they view that channel
-router.post('/removeAllNotificationsFromUserChat', async(req, res) => {
+router.put('/removeAllNotificationsFromUserChat', verifyToken, async (req, res) => {
     try {
         const UserChatJuncRow = await UserChatJunc.findOne({
-            where: { userId: req.body.userId, chatRoomId: req.body.chatId}
+            where: { userId: req.body.userId, chatRoomId: req.body.chatId }
         })
 
         if (!UserChatJuncRow) {
-            return res.status(400).json({ error: 'could not add notification'})
+            return res.status(400).json({ error: 'could not add notification' })
         }
 
         UserChatJuncRow.notifications = 0;
         await UserChatJuncRow.save();
         res.status(200).json(UserChatJuncRow)
-    } catch(err) {
+    } catch (err) {
         console.log(err)
     }
 })
