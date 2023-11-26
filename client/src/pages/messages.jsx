@@ -4,7 +4,7 @@ import CreateChatModal from "../components/CreateChatModal";
 import ChatBox from "../components/ChatBox";
 
 
-function Messages({ triggerRefreshAmongPages }) {
+function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
     // these two use state variable are paired with the floating button
     const [showCreateChatModal, setShowCreateChatModal] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -35,6 +35,7 @@ function Messages({ triggerRefreshAmongPages }) {
                 userId={userData?.id}
                 triggerModalStatus={showCreateChatModal}
                 triggerRefreshAmongPages={triggerRefreshAmongPages}
+                setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
             />
         </main>
 

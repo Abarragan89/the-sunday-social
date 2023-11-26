@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom'
-import { IoHome,  } from 'react-icons/io5'
+import { IoHome, } from 'react-icons/io5'
 import { BiSolidMessage } from 'react-icons/bi'
 import { FaUserFriends } from 'react-icons/fa'
 import LoginModal from '../LoginModal';
 import { Image } from 'cloudinary-react';
+import { useHref } from 'react-router-dom'
 import './index.css'
 
-function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
+function NavLinks({ closeHamburger, isMobile }) {
 
+    const href = useHref();
+    
     const activeLinkStyle = {
         color: '#FFCD00'
     }
@@ -22,15 +25,32 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
 
     const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(null);
+    let [messageNotifications, setMessageNotifications] = useState(0)
 
-    useEffect(() => {
-        async function getUserData() {
+    async function getUserData() {
+        try {
             const rawData = await fetch('/api/user');
             const data = await rawData.json();
             setUserData(data);
+        } catch (err) {
+            console.log('error getting user info in nav')
         }
+    }
+    async function getUserMessageNotifications() {
+        try {
+            const rawData = await fetch('/api/user/getTotalMessageNotifications');
+            const data = await rawData.json();
+            console.log(data)
+            setMessageNotifications(data.total)
+        } catch (err) {
+            console.log('error getting user info in nav')
+        }
+    }
+
+    useEffect(() => {
         getUserData();
-    }, [triggerRefreshAmongPages])
+        getUserMessageNotifications();
+    }, [href])
 
     return (
         <>
@@ -49,11 +69,12 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
                         </li>
                         <li>
                             <NavLink
-                                to='/messages'
+                                to={`/messages/0`}
                                 onClick={closeHamburgerMenu}
                                 style={({ isActive }) => isActive ? activeLinkStyle : {}}
                             >
                                 <BiSolidMessage />
+                                {messageNotifications > 0 && <p className='notification-bubble-in-nav'>!</p> }
                             </NavLink>
                         </li>
                         <li>
@@ -71,7 +92,8 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
                                 onClick={closeHamburgerMenu}
                                 style={({ isActive }) => isActive ? activeLinkStyle : {}}
                             >
-                            <Image className='profile-pic-in-nav' cloudName='dp6owwg93' publicId={userData?.profilePic} />
+                                <Image className='profile-pic-in-nav' cloudName='dp6owwg93' publicId={userData?.profilePic} />
+                                {/* <p className='notification-bubble-in-nav'>!</p> */}
                             </NavLink>
                         </li>
                     </ul>

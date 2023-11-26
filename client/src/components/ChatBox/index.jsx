@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState, useRef } from "react";
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { formatDateShortYear } from "../../utils/formatDate";
 import ShowChatUserListModal from "../showChatUserListModal";
 import { getTime } from "../../utils/formatDate";
@@ -14,9 +14,8 @@ function ChatBox({
     userId,
     triggerModalStatus,
     triggerRefreshAmongPages,
+    // setTriggerRefreshAmongPages
 }) {
-
-    const navigate = useNavigate();
     const { chatId } = useParams();
     const [allMessages, setAllMessage] = useState(null);
     const [allChatrooms, setAllChatrooms] = useState(null);
@@ -46,18 +45,13 @@ function ChatBox({
         }
     }
 
-    // open latest chat as soon as page loads
-    if (!chatId && allChatrooms) {
-        navigate(`/messages/${allChatrooms.ChatRoom[0]?.id}`)
-    }
-
     async function removeAllNotifications(chatId) {
         try {
             const data = await fetch('/api/user/removeAllNotificationsFromUserChat', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                }, 
+                },
                 body: JSON.stringify({
                     userId,
                     chatId
@@ -68,28 +62,30 @@ function ChatBox({
                 console.log('could not remove notifications')
             }
             await getChatrooms();
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     useEffect(() => {
-        removeAllNotifications(chatId);
-        getMessages(chatId);
-        socket.emit('join_room', chatId)
-        // leave room so messages don't render if you switch chat channel!!!!
-        return () => {
-            socket.emit('leave_room', chatId);
-        };
+        if (chatId && userId) {
+            removeAllNotifications(chatId);
+            getMessages(chatId);
+            socket.emit('join_room', chatId)
+            // leave room so messages don't render if you switch chat channel!!!!
+            return () => {
+                socket.emit('leave_room', chatId);
+            };
+        }
     }, [userId, chatId, triggerModalStatus, triggerRefreshAmongPages])
 
-    async function addNotification (chatId) {
+    async function addNotification(chatId) {
         try {
             const data = await fetch(`/api/user/addNotification`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
-                }, 
+                },
                 body: JSON.stringify({
                     userId,
                     chatId
@@ -99,7 +95,7 @@ function ChatBox({
             if (response) {
                 getChatrooms();
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -168,13 +164,11 @@ function ChatBox({
         setShowChatUserList(true)
     }
 
-    console.log(allChatrooms)
-
     return (
         <section className="chatbox-main-section">
             <aside className="chatbox-aside">
-                {showChatUserList && 
-                    <ShowChatUserListModal 
+                {showChatUserList &&
+                    <ShowChatUserListModal
                         triggerModal={setShowChatUserList}
                         data={currentChatUserList}
                         username={username}
@@ -188,7 +182,7 @@ function ChatBox({
                             <div key={index} className="link-container">
                                 <Link
                                     onClick={() => {
-                                        setMessageText(''); 
+                                        setMessageText('');
                                         removeAllNotifications(chatId);
                                         setIsSendingMessage(false)
                                     }}
@@ -210,7 +204,10 @@ function ChatBox({
             </aside>
             <div className="message-text-screen">
                 <div className="text-messages-area">
-                    {allMessages && allMessages.map((message, index) => {
+                    {chatId == 0 ? 
+                    <p className="select-chat-channel-text">Select a chat</p>
+                    :
+                    allMessages && allMessages.map((message, index) => {
                         return (
                             <div key={index} className={`${message.sender === username ? 'message-justify-right' : 'message-justify-left'}`}>
                                 <div className={`message-bubble ${message.sender === username ? 'outgoing-message-bubble' : 'incoming-message-bubble'}`}>
@@ -226,7 +223,8 @@ function ChatBox({
 
                             </div>
                         )
-                    })}
+                    })
+                    }
                     {/* I'll use this div to scroll to bottom */}
                     <div ref={messageTextArea}></div>
                 </div>

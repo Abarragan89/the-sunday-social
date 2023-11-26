@@ -82,14 +82,15 @@
 
 .notification-bubble-in-message-aside {
     position: absolute;
-    width: 25px;
+    width: fit-content;
     color: var(--off-white);
     text-align: center;
-    padding: 3px 5px;
+    font-size: 1rem;
+    padding: 4px 8px;
     top: 3px;
     right: 5px;
     background-color: red;
-    border-radius: 40%;
+    border-radius: 50%;
     z-index: 30;
 }
 
@@ -171,6 +172,17 @@
     color: var(--primary-color);
     top: -27px;
     left: 5px;
+}
+
+.select-chat-channel-text {
+    position: absolute;
+    font-size: 1.2rem;
+    text-align: center;
+    font-style: italic;
+    top: 37%;
+    right: 0;
+    left: 0;
+    color: var(--primary-color)
 }
 
 .text-messages-area {

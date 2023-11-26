@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { verifyToken } = require('../utils/auth');
-const { Op } = require('sequelize');
+const { Op, sequelize } = require('sequelize');
 const {
     Post,
     Comment,
@@ -12,7 +12,6 @@ const {
     UserChatJunc,
     Message
 } = require('../models');
-const sequelize = require('../config/connection');
 
 // this route is just to check if user is logged in. Used in Navigation
 // and other components. no database query
@@ -660,6 +659,24 @@ router.put('/removeAllNotificationsFromUserChat', verifyToken, async (req, res) 
         res.status(200).json(UserChatJuncRow)
     } catch (err) {
         console.log(err)
+    }
+})
+
+router.get('/getTotalMessageNotifications', verifyToken, async(req, res) => {
+    try{ 
+        const UserChatRows = await UserChatJunc.sum('notifications', {
+            where: {
+                userId: req.user.data.id, 
+            }
+        });
+
+        if (!UserChatRows) {
+            return res.status(200).json({ total: 0 })
+        }
+        res.status(200).json({ total: UserChatRows})
+
+    } catch(err) {
+        res.status(500).json({ error: err })
     }
 })
 

@@ -113,7 +113,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages}) {
             <p className="submit-btn logout-btn" onClick={handleLogout}>Logout</p>
             <h2 className="section-heading"><span>Your Info</span></h2>
 
-
+            {userData && 
             <section className="profile-stats-main-section">
                 <div className="user-profile-image-bio">
 
@@ -153,6 +153,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages}) {
                     <p>Pet Peeve: <span>{userData && userData?.petPeeve}</span></p>
                 </div>
             </section>
+            }
 
 
             {/* User Posts */}
