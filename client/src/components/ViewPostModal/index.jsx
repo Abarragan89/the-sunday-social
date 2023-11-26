@@ -25,20 +25,20 @@ function ViewPostModal({
     const [refresh, setRefresh] = useState(false);
 
 
+    async function getUserData() {
+        const rawData = await fetch('/api/user');
+        const data = await rawData.json();
+        if (data?.username) {
+            setIsUserLoggedIn(true)
+        }
+    }
+    async function getSinglePost() {
+        const rawData = await fetch(`/api/post/getSingleViewPost/${postId}`);
+        const response = await rawData.json();
+        setPostData(response)
+        setUpdatedPostText(response.postText)
+    }
     useEffect(() => {
-        async function getUserData() {
-            const rawData = await fetch('/api/user');
-            const data = await rawData.json();
-            if (data?.username) {
-                setIsUserLoggedIn(true)
-            }
-        }
-        async function getSinglePost() {
-            const rawData = await fetch(`/api/post/getSingleViewPost/${postId}`);
-            const response = await rawData.json();
-            setPostData(response)
-            setUpdatedPostText(response.postText)
-        }
         getSinglePost();
         getUserData();
     }, [postId, refresh])
@@ -62,6 +62,7 @@ function ViewPostModal({
             })
             const response = await data.json();
             if (response) {
+                await addNotificationToPost()
                 setRefresh(!refresh);
                 setCommentText('');
                 // refreshes the post in Post component OR the Most Post
@@ -71,6 +72,28 @@ function ViewPostModal({
             console.log('comment not added ', err);
         }
     }
+
+    async function addNotificationToPost() {
+        try {
+            const data = await fetch('/api/user/addNotificationToPost', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId,
+                })
+            })
+            const response = await data.json();
+            if (!response) {
+                console.log('could not add notification to post')
+            }
+        } catch (err) {
+            console.log('comment not added ', err);
+        }
+    }
+
+    
 
     async function editPostHandler() {
         try {

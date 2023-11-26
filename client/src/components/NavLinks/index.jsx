@@ -9,10 +9,10 @@ import { Image } from 'cloudinary-react';
 import { useHref } from 'react-router-dom'
 import './index.css'
 
-function NavLinks({ closeHamburger, isMobile }) {
+function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
 
     const href = useHref();
-    
+
     const activeLinkStyle = {
         color: '#FFCD00'
     }
@@ -25,7 +25,9 @@ function NavLinks({ closeHamburger, isMobile }) {
 
     const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(null);
-    let [messageNotifications, setMessageNotifications] = useState(0)
+    let [messageNotifications, setMessageNotifications] = useState(0);
+    let [postNotifications, setPostNotifications] = useState(0);
+
 
     async function getUserData() {
         try {
@@ -47,10 +49,27 @@ function NavLinks({ closeHamburger, isMobile }) {
         }
     }
 
+    async function getUserPostNotifications() {
+        try {
+            const rawData = await fetch('/api/post/getTotalPostNotifications');
+            const data = await rawData.json();
+            console.log(data)
+            setPostNotifications(data.total)
+        } catch (err) {
+            console.log('error getting user info in nav')
+        }
+    }
+
     useEffect(() => {
         getUserData();
+    }, [triggerRefreshAmongPages])
+    
+    useEffect(() => {
+        getUserPostNotifications();
         getUserMessageNotifications();
     }, [href])
+
+    console.log(postNotifications)
 
     return (
         <>
@@ -93,7 +112,7 @@ function NavLinks({ closeHamburger, isMobile }) {
                                 style={({ isActive }) => isActive ? activeLinkStyle : {}}
                             >
                                 <Image className='profile-pic-in-nav' cloudName='dp6owwg93' publicId={userData?.profilePic} />
-                                {/* <p className='notification-bubble-in-nav'>!</p> */}
+                                {postNotifications > 0 && <p className='notification-bubble-in-nav'>!</p> }
                             </NavLink>
                         </li>
                     </ul>

@@ -26,7 +26,7 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
             }
         }
         getPost();
-    }, [postId, refresh])
+    }, [postId, refresh, showModal])
 
     async function addLike(e) {
         e.stopPropagation();
@@ -62,6 +62,26 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
         });
     };
 
+    async function removeNotificationFromPost() {
+        try {
+            const data = await fetch('/api/user/removeNotificationFromPost', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    postId,
+                })
+            })
+            const response = await data.json();
+            if (!response) {
+                console.log('could not add notification to post')
+            }
+        } catch (err) {
+            console.log('comment not added', err);
+        }
+    }
+
     return (
         <>
             {showModal &&
@@ -78,14 +98,12 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
             }
 
             <ToastContainer />
-
-            <section onClick={() => setTimeout(() => setShowModal(true), 200)} className="post-section">
+            <section onClick={() => setTimeout(() => {setShowModal(true); removeNotificationFromPost()}, 200)} className="post-section">       
                 <div className="post-header">
                     <div className='flex-box-sa'>
 
                         <figure>
                             <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={postData?.User?.profilePic} />
-
                         </figure>
                         <div>
                             <p>{postData?.author}</p>
@@ -94,6 +112,8 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
                     </div>
 
                     {isInUserProfile && <p className='click-to-edit-modal-text'>(click to edit)</p>}
+                    {/* Notification Bubble */}
+                    {postData?.notifications && isInUserProfile > 0 ? <p className='notification-on-post-profile'>{postData.notifications}</p> : <p></p>}
 
                 </div>
                 <div className="post-body">

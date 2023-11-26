@@ -36,6 +36,11 @@ Post.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0
+        },
+        notifications: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            defaultValue: 0
         }
     },
     {

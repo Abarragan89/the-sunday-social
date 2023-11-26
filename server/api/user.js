@@ -169,6 +169,37 @@ router.delete('/deletePost', verifyToken, async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: 'post not deleted' })
     }
+});
+
+router.put('/addNotificationToPost', verifyToken, async(req, res) => {
+    try {
+        const post = await Post.findByPk(req.body.postId);
+
+        if (!post) {
+            return res.status(400).json({ error: 'did not add notification to post'})
+        }
+        post.notifications += 1;
+        await post.save();
+        res.status(200).json(post)
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
+})
+
+router.put('/removeNotificationFromPost', verifyToken, async(req, res) => {
+    try {
+        const post = await Post.findByPk(req.body.postId);
+
+        if (!post) {
+            return res.status(400).json({ error: 'did not add notification to post'})
+        }
+        post.notifications = 0;
+        await post.save();
+        res.status(200).json(post)
+
+    } catch(err) {
+        res.status(500).json({error: err})
+    }
 })
 
 router.put('/updateUserInfo', verifyToken, async (req, res) => {

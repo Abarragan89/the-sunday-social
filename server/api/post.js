@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Post, Comment, User, Likes } = require('../models');
+const { verifyToken } = require('../utils/auth');
 
 // this is for the homeroutes to get the ids to pass to the Post components
 router.get('/getAllPosts', async (req, res) => {
@@ -128,6 +129,24 @@ router.get('/mostCommentedPosts', async (req, res) => {
         res.status(200).json(mostLikedPosts)
     } catch (err) {
         console.log(err)
+    }
+});
+
+router.get('/getTotalPostNotifications', verifyToken, async(req, res) => {
+    try{ 
+        const postNotificationCount = await Post.sum('notifications', {
+            where: {
+                userId: req.user.data.id, 
+            }
+        });
+
+        if (!postNotificationCount) {
+            return res.status(200).json({ total: 0 })
+        }
+        res.status(200).json({ total: postNotificationCount})
+
+    } catch(err) {
+        res.status(500).json({ error: err })
     }
 })
 

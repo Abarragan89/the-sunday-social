@@ -346,6 +346,12 @@ ol, ul {
   color: var(--tertiary-color)
 }
 
+.user-post-container {
+  width: 90%; 
+  margin: 0 auto;
+  margin-bottom: 80px;
+}
+
 @media screen and (max-width: 655px) {
   .profile-stats-main-section {
     flex-direction: column;
