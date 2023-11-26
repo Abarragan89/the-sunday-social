@@ -22,7 +22,8 @@ function ChatBox({
     const [allChatrooms, setAllChatrooms] = useState(null);
     const [messageText, setMessageText] = useState('');
     const [showChatUserList, setShowChatUserList] = useState(false);
-    const [currentChatUserList, setCurrentChatUserList] = useState(null)
+    const [currentChatUserList, setCurrentChatUserList] = useState(null);
+    const [isSendingMessage, setIsSendingMessage] = useState(false);
 
     const messageTextArea = useRef(null);
 
@@ -122,14 +123,15 @@ function ChatBox({
             if (!response) {
                 console.log(' error sending message ')
             }
+            setIsSendingMessage(true)
             setMessageText('');
-            getMessages(chatId);
-            scrollToBottom();
-            removeAllNotifications(chatId);
+            await getMessages(chatId);
+            await removeAllNotifications(chatId);
             // only add notification if user is not in the same chat
             await addNotification(chatId);
             // Socket io emit to render automatically
             socket.emit('send_message', { data, chatId })
+            setIsSendingMessage(false)
         } catch (err) {
             console.log(err)
         }
@@ -141,15 +143,22 @@ function ChatBox({
         // and in turn trigger the recieved_message and trigger reload of messages
         socket.on('recieve_message', async (data) => {
             await getMessages(data.chatId);
+            setIsSendingMessage(true);
         })
     }, [socket])
 
-    useEffect(scrollToBottom)
+    useEffect(() => {
+        if (!isSendingMessage) {
+            scrollToBottom('auto')
+        } else {
+            scrollToBottom('smooth')
+        }
+    }, [allMessages])
 
     // Function to scroll to the bottom
-    function scrollToBottom() {
+    function scrollToBottom(scrollType) {
         if (messageTextArea.current) {
-            messageTextArea.current?.scrollIntoView({ behavior: "auto" })
+            messageTextArea.current.scrollIntoView({ behavior: scrollType })
         }
     }
 
@@ -178,7 +187,11 @@ function ChatBox({
                         return (
                             <div key={index} className="link-container">
                                 <Link
-                                    onClick={() => {setMessageText(''); removeAllNotifications(chatId)}}
+                                    onClick={() => {
+                                        setMessageText(''); 
+                                        removeAllNotifications(chatId);
+                                        setIsSendingMessage(false)
+                                    }}
                                     className={`chat-aside-link ${chatId == chatroom.id ? 'active-chat' : ''}`}
                                     to={`/messages/${chatroom.id}`}
                                 >
