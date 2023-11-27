@@ -5,6 +5,7 @@ import ProfilePage from './pages/profilePage'
 import Messages from './pages/messages'
 import Friends from './pages/friends'
 import FriendProfilePage from './pages/friendProfile'
+import ResetPasswordPage from './pages/resetPasswordPage'
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
@@ -31,6 +32,7 @@ function App() {
             setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
           />} />
           <Route path='/friendProfile/:friendId' element={<FriendProfilePage />} />
+          <Route path='/passwordReset/:tokenId' element={<ResetPasswordPage />} />
         </Routes>
       </BrowserRouter>
     </>

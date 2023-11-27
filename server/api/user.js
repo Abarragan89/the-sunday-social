@@ -723,7 +723,6 @@ router.post('/resetPasswordEmail', async(req, res) => {
             }
         })
 
-        console.log('asdfoijapwioefj fj pafj', findUser)
         if (!findUser) {
             return res.status(400).json({ error: 'no user found'})
         }
@@ -738,5 +737,49 @@ router.post('/resetPasswordEmail', async(req, res) => {
         res.status(500).json({error: err})
     }
 })
+
+router.put('/resetPassword', async(req, res) => {
+    try {   
+        const findUser = await User.findByPk(req.body.userData.id)
+
+        if (!findUser) {
+            return res.status(400).json({ error: 'no user found'})
+        }
+
+        findUser.password = req.body.password;
+        await findUser.save();
+
+        res.status(200).json(findUser);
+    }catch(err) {
+        res.status(500).json({err})
+    }
+})
+
+router.get('/verifyUserByToken/:tokenId', async(req, res) => {
+    try {
+        const userByToken = await TempResetToken.findOne({
+            where: {
+                tokenId: req.params.tokenId
+            },
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'email']
+                }
+            ]
+        })
+        if (!userByToken) {
+            res.status(400).json({error: 'no user found'})
+        }
+        res.status(200).json(userByToken.User);
+
+    } catch(err) {
+        res.status(500).json(err)
+    }
+});
+
+
+// reset password modal needs text
+// re do the repo
 
 export default router;

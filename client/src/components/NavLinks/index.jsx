@@ -61,7 +61,7 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
     useEffect(() => {
         getUserData();
     }, [triggerRefreshAmongPages])
-    
+
     useEffect(() => {
         getUserPostNotifications();
         getUserMessageNotifications();
@@ -69,59 +69,65 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
 
     return (
         <>
-            {showModal && <LoginModal setShowModal={setShowModal} />}
-            {userData?.profilePic ?
-                <nav className='navLinks'>
-                    <ul>
-                        <li>
-                            <NavLink
-                                to='/'
-                                onClick={closeHamburgerMenu}
-                                style={({ isActive }) => isActive ? activeLinkStyle : {}}
-                            >
-                                <IoHome />
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to={`/messages/0`}
-                                onClick={closeHamburgerMenu}
-                                style={({ isActive }) => isActive ? activeLinkStyle : {}}
-                            >
-                                <BiSolidMessage />
-                                {messageNotifications > 0 && <p className='notification-bubble-in-nav'>!</p> }
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/friends'
-                                onClick={closeHamburgerMenu}
-                                style={({ isActive }) => isActive ? activeLinkStyle : {}}
-                            >
-                                <FaUserFriends />
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                to='/profile'
-                                onClick={closeHamburgerMenu}
-                                style={({ isActive }) => isActive ? activeLinkStyle : {}}
-                            >
-                                <Image className='profile-pic-in-nav' cloudName='dp6owwg93' publicId={userData?.profilePic} />
-                                {postNotifications > 0 && <p className='notification-bubble-in-nav'>!</p> }
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-                :
-                <nav className='navLinks'>
-                    <ul>
-                        <li>
-                            <p onClick={() => setShowModal(true)}>Sign in</p>
-                        </li>
-                    </ul>
-                </nav>
+            {!href.includes('/passwordReset') &&
+                <>
+                    {showModal && <LoginModal setShowModal={setShowModal} />}
+                    {userData?.profilePic ?
+                        <nav className='navLinks'>
+                            <ul>
+                                <li>
+                                    <NavLink
+                                        to='/'
+                                        onClick={closeHamburgerMenu}
+                                        style={({ isActive }) => isActive ? activeLinkStyle : {}}
+                                    >
+                                        <IoHome />
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to={`/messages/0`}
+                                        onClick={closeHamburgerMenu}
+                                        style={({ isActive }) => isActive ? activeLinkStyle : {}}
+                                    >
+                                        <BiSolidMessage />
+                                        {messageNotifications > 0 && <p className='notification-bubble-in-nav'>!</p>}
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/friends'
+                                        onClick={closeHamburgerMenu}
+                                        style={({ isActive }) => isActive ? activeLinkStyle : {}}
+                                    >
+                                        <FaUserFriends />
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to='/profile'
+                                        onClick={closeHamburgerMenu}
+                                        style={({ isActive }) => isActive ? activeLinkStyle : {}}
+                                    >
+                                        <Image className='profile-pic-in-nav' cloudName='dp6owwg93' publicId={userData?.profilePic} />
+                                        {postNotifications > 0 && <p className='notification-bubble-in-nav'>!</p>}
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </nav>
+                        :
+                        <nav className='navLinks'>
+                            <ul>
+                                <li>
+                                    <p onClick={() => setShowModal(true)}>Sign in</p>
+                                </li>
+                            </ul>
+                        </nav>
+                    }
+                </>
+
             }
+
         </>
     )
 }
