@@ -47,7 +47,6 @@ function CreateChatModal({ triggerModal }) {
             const data = await fetch(`/api/user/doesChatRoomExist/${userIdsForChatRoom[0]}`);
             const response = await data.json();
             // redirect if there is a response with chatID
-            console.log(response)
             if (response) {
                 navigate(`/messages/${response}`)
                 triggerModal(false);

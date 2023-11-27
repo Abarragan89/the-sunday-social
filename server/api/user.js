@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const { verifyToken } = require('../utils/auth');
-const { Op, sequelize } = require('sequelize');
+const { resetPassword } = require('../utils/mailer')
+const { Op } = require('sequelize');
+// const { nanoid }  = require('nanoid');
+
 const {
     Post,
     Comment,
@@ -10,7 +13,8 @@ const {
     FriendRequest,
     ChatRoom,
     UserChatJunc,
-    Message
+    Message,
+    TempResetToken
 } = require('../models');
 
 // this route is just to check if user is logged in. Used in Navigation
@@ -708,6 +712,33 @@ router.get('/getTotalMessageNotifications', verifyToken, async(req, res) => {
 
     } catch(err) {
         res.status(500).json({ error: err })
+    }
+});
+
+router.post('/resetPasswordEmail', async(req, res) => {
+    try {   
+        const findUser = await User.findOne({
+            attributes: ['username', 'email', 'id'],
+            where: {
+                email: req.body.email
+            }
+        })
+
+        if (!findUser) {
+            return res.status(400).json({ error: 'no user found'})
+        }
+
+        const tempToken = await TempResetToken.create({
+            userId: findUser.id,
+            tokenId: nanoid()
+        })
+
+        await resetPassword(findUser, tempToken)
+
+        res.status(200).json(tempToken);
+
+    }catch(err) {
+        res.status(500).json({error: err})
     }
 })
 

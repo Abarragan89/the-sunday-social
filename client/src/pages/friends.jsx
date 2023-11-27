@@ -52,10 +52,6 @@ function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
                     triggerRefreshInFriends={triggerRefreshInFriends}
                 />
             </main>
-            <p>Hover over message aside to show all users</p>
-            <p>change default photo google</p>
-            <p>Notifications with socket io in messages</p>
-            <p>Heroku</p>
         </main>
 
     )

@@ -120,30 +120,28 @@ function LoginModal({ setShowModal }) {
         }
     }
 
-    async function forgotPasswordHandler(e) {
+    async function resetPasswordHandler(e) {
         e.preventDefault();
-        if (isLoading) return;
-        setIsLoading(true)
-
+        if (email === '') return;
         try {
-            const data = await fetch('/api/auth/signup', {
+            const data = await fetch('/resetPasswordEmail', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    email,
-                    password,
-                    username
+                    email
                 })
-            })
+            });
 
-            const response = data.json();
-            if (response.error) {
-                showToastMessage(response.error, 'forgotPasswordError')
-                setIsLoading(false)
+            const response = await data.json()
+            if (!response) {
+                console.log('error sending ')
+            } else {
+                console.log('message sent')
             }
-            window.location.reload();
-        } catch (err) {
-            console.log('error', err)
+        } catch(err) {
+            console.log(err)
         }
     }
 
@@ -248,7 +246,7 @@ function LoginModal({ setShowModal }) {
                 {showForgotPassword &&
                     <>
                         <h3 className="modal-title">Forgot Password?</h3>
-                        <form className="login-form" onSubmit={(e) => forgotPasswordHandler(e)}>
+                        <form className="login-form" onSubmit={(e) => resetPasswordHandler(e)}>
                             <input
                                 type="email"
                                 ref={emailInputEl}

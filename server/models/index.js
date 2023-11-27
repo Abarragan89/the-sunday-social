@@ -7,6 +7,7 @@ const { FriendRequest } = require('./FriendRequest')
 const { ChatRoom } = require('./ChatRoom');
 const { Message } = require('./Message');
 const { UserChatJunc } = require('./UserChatJunc')
+const { TempResetToken } = require('./TempResetToken');
 
 // friendships
 User.belongsToMany(User, {
@@ -88,16 +89,6 @@ Likes.hasOne(Post, {
     foreignKey: 'postId'
 })
 
-// ChatRoom and Messages 
-// User.hasMany(Message, {
-//     foreignKey: 'sender',
-//     onDelete: 'CASCADE'
-// })
-
-// Message.belongsTo(User, {
-//     foreignKey: 'sender'
-// })
-
 ChatRoom.hasMany(Message, {
     foreignKey: 'chatroomId',
     onDelete: 'CASCADE'
@@ -120,6 +111,15 @@ ChatRoom.belongsToMany(User, {
 })
 
 
+// Reset token
+User.hasMany(TempResetToken, {
+    foreignKey: 'userId',
+    onDelete: 'CASCADE'
+})
+
+TempResetToken.belongsTo(User, {
+    foreignKey: 'userId'
+})
 
 
 module.exports =
@@ -132,5 +132,6 @@ module.exports =
     FriendRequest,
     ChatRoom,
     Message,
-    UserChatJunc
+    UserChatJunc,
+    TempResetToken
 }

@@ -42,7 +42,6 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
         try {
             const rawData = await fetch('/api/user/getTotalMessageNotifications');
             const data = await rawData.json();
-            console.log(data)
             setMessageNotifications(data.total)
         } catch (err) {
             console.log('error getting user info in nav')
@@ -53,7 +52,6 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
         try {
             const rawData = await fetch('/api/post/getTotalPostNotifications');
             const data = await rawData.json();
-            console.log(data)
             setPostNotifications(data.total)
         } catch (err) {
             console.log('error getting user info in nav')
@@ -68,8 +66,6 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
         getUserPostNotifications();
         getUserMessageNotifications();
     }, [href])
-
-    console.log(postNotifications)
 
     return (
         <>
