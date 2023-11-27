@@ -1,4 +1,5 @@
-import express, { urlencoded, json, static as staticFiles } from 'express';
+// import express, { urlencoded, json, static as staticFiles } from 'express';
+const express = require('express');
 import { join } from 'path';
 const app = express();
 import api from './api/index.js';
