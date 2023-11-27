@@ -1,8 +1,8 @@
 {
   "name": "thesundaysocial",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "social-media-app",
+  "main": "server/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently  \"cd server && npm run watch\" \" cd client && npm run dev\"",
