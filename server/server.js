@@ -1,16 +1,12 @@
-// import express, { urlencoded, json, static as staticFiles } from 'express';
-const express = require('express');
+import express, { urlencoded, json, static as staticFiles } from 'express';
 import { join } from 'path';
 const app = express();
 import api from './api/index.js';
 import { createServer } from 'http';
-// import { Server } from 'socket.io';
-const { Server } = require('socket.io')
-// import cors from 'cors';
-const cors = require('cors')
+import { Server } from 'socket.io';
+import cors from 'cors';
 import db from './config/connection.js';
-// import cookieParser from 'cookie-parser';
-const cookieParser = require('cookie-parser')
+import cookieParser from 'cookie-parser';
 
 
 
