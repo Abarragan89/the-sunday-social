@@ -9,7 +9,8 @@ const { Server } = require('socket.io')
 // import cors from 'cors';
 const cors = require('cors')
 import db from './config/connection.js';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
+const cookieParser = require('cookie-parser')
 
 
 
