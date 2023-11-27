@@ -1,7 +1,6 @@
-// import {nodemailer} from 'nodemailer';
-// import { google } from 'googleapis';
-const { nodemailer } = require('nodemailer')
-const { google } = require('googleapis')
+import nodemailer from 'nodemailer';
+import { google } from 'googleapis';
+import 'dotenv/config';
 const OAuth2 = google.auth.OAuth2;
 const OAuth2_client = new OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET)
 OAuth2_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
@@ -37,11 +36,11 @@ async function resetPassword(toUser, tempToken) {
         to: toUser.email,
         subject: 'The Sunday Social - Reset Password',
         html: `
-                <h3>Hello ${toUser.displayName},</h3>
+                <h3>Hello ${toUser.username},</h3>
                 <p>Seems like you forgot something...</p>
-                <p>Click the link to reset your password. <a target="_" href="${process.env.DOMAIN}/resetPassword/${tempToken.uniqueToken}" rel="noopener noreferrer">Reset Password</a> </p>
+                <p>Click the link to reset your password. <a target="_" href="${process.env.DOMAIN}/resetPassword/${tempToken.tokenId}" rel="noopener noreferrer">Reset Password</a> </p>
                 <p>Thank you,</p>
-                <p>-Math Fact Missions</p>
+                <p>-The Sunday Social</p>
             `
     }
     // send through nodemailer
@@ -58,4 +57,4 @@ async function resetPassword(toUser, tempToken) {
     })
 }
 
-module.exports = { resetPassword }
+export default resetPassword;

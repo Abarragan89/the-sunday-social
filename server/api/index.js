@@ -1,7 +1,7 @@
-const express = require('express');
-const authRouter = require('./auth')
-const userRouter = require('./user');
-const posts = require('./post');
+import express from 'express';
+import authRouter from './auth.js';
+import userRouter from './user.js';
+import posts from './post.js';
 
 
 const app = express();
@@ -11,4 +11,4 @@ app.use('/user', userRouter)
 app.use('/post', posts)
 
 
-module.exports = app;
+export default app;

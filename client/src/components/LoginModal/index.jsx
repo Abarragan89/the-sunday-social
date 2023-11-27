@@ -124,7 +124,7 @@ function LoginModal({ setShowModal }) {
         e.preventDefault();
         if (email === '') return;
         try {
-            const data = await fetch('/resetPasswordEmail', {
+            const data = await fetch('/api/user/resetPasswordEmail', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

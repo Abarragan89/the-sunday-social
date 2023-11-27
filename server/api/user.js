@@ -1,21 +1,20 @@
-const router = require('express').Router();
-const { verifyToken } = require('../utils/auth');
-const { resetPassword } = require('../utils/mailer')
-const { Op } = require('sequelize');
-// const { nanoid }  = require('nanoid');
+import express from 'express';
+import { verifyToken } from '../utils/auth.js';
+import resetPassword from '../utils/mailer.js';
+import { Op } from 'sequelize';
+import { nanoid } from 'nanoid';
+import { Post } from '../models/index.js'
+import { Comment } from '../models/index.js'
+import { Likes } from '../models/index.js'
+import { User } from '../models/index.js'
+import { Friendship } from '../models/index.js'
+import { FriendRequest } from '../models/index.js'
+import { ChatRoom } from '../models/index.js'
+import { UserChatJunc } from '../models/index.js'
+import { Message } from '../models/index.js'
+import { TempResetToken } from '../models/index.js'
 
-const {
-    Post,
-    Comment,
-    Likes,
-    User,
-    Friendship,
-    FriendRequest,
-    ChatRoom,
-    UserChatJunc,
-    Message,
-    TempResetToken
-} = require('../models');
+const router = express.Router();
 
 // this route is just to check if user is logged in. Used in Navigation
 // and other components. no database query
@@ -724,17 +723,15 @@ router.post('/resetPasswordEmail', async(req, res) => {
             }
         })
 
+        console.log('asdfoijapwioefj fj pafj', findUser)
         if (!findUser) {
             return res.status(400).json({ error: 'no user found'})
         }
-
         const tempToken = await TempResetToken.create({
             userId: findUser.id,
             tokenId: nanoid()
         })
-
         await resetPassword(findUser, tempToken)
-
         res.status(200).json(tempToken);
 
     }catch(err) {
@@ -742,4 +739,4 @@ router.post('/resetPasswordEmail', async(req, res) => {
     }
 })
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../config/connection');
-const bcrypt = require('bcrypt')
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/connection.js';
+import bcrypt from 'bcrypt';
 
 class User extends Model {
     // login verification
@@ -107,7 +107,7 @@ User.init(
     }
 )
 
-module.exports = { User }
+export default User;
 
 
 
