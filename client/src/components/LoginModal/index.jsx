@@ -20,14 +20,13 @@ function LoginModal({ setShowModal }) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [username, setUsername] = useState('');
-
-
     const [showSignup, setShowSignup] = useState(false);
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
     const emailInputEl = useRef(null);
+    const forgotEmailText = useRef(null);
 
     useEffect(() => {
         emailInputEl.current.focus()
@@ -138,7 +137,7 @@ function LoginModal({ setShowModal }) {
             if (!response) {
                 console.log('error sending ')
             } else {
-                console.log('message sent')
+                forgotEmailText.current.innerHTML = 'Check your email <span>(including Spam/Junk Folder)</span> to reset your password'
             }
         } catch(err) {
             console.log(err)
@@ -238,8 +237,8 @@ function LoginModal({ setShowModal }) {
                         <p className="login-option-text">Already a member?
                             <span onClick={showLoginHandler}> Sign in</span>
                         </p>
-                        <p className="login-option-text">Forgot
-                            <span onClick={showForgotPasswordHandler}> Password?</span>
+                        <p className="login-option-text">Forgot 
+                            <span onClick={showForgotPasswordHandler}>Password?</span>
                         </p>
                     </>
                 }
@@ -253,7 +252,7 @@ function LoginModal({ setShowModal }) {
                                 placeholder="email"
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-
+                            <p ref={forgotEmailText} className="forgot-email-text"></p>
                             {isLoading ?
                                 <p className="loading-icon">
                                     <FallingLines
@@ -267,7 +266,7 @@ function LoginModal({ setShowModal }) {
                                 <button className="submit-btn" type="submit">Reset</button>
                             }
                         </form>
-                        <p className="login-option-text">Or <br /> <br />
+                        <p className="login-option-text">Or <br />
                             <span onClick={showLoginHandler}>Sign in</span>
                         </p>
 

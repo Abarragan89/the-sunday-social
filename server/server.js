@@ -8,6 +8,8 @@ import cors from 'cors';
 import db from './config/connection.js';
 import cookieParser from 'cookie-parser';
 
+
+
 const PORT = process.env.PORT || 3001;
 
 const server = createServer(app)
@@ -60,6 +62,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 server.listen(PORT, () => {
-  // db.sync({ force: true })
+  db.sync({ force: false })
   console.log(`API server running on port ${PORT}!`);
 })
+
+

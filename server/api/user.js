@@ -778,8 +778,4 @@ router.get('/verifyUserByToken/:tokenId', async(req, res) => {
     }
 });
 
-
-// reset password modal needs text
-// re do the repo
-
 export default router;
