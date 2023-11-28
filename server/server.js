@@ -1,18 +1,17 @@
-import express, { urlencoded, json, static as staticFiles } from 'express';
-import { join } from 'path';
+const express = require('express');
+const path = require('path');
 const app = express();
-import api from './api/index.js';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
-import cors from 'cors';
-import db from './config/connection.js';
-import cookieParser from 'cookie-parser';
-
+const api = require('./api');
+const http = require('http');
+const { Server } = require('socket.io')
+const cors = require('cors')
+const db = require('./config/connection');
+const cookieParser = require('cookie-parser');
 
 
 const PORT = process.env.PORT || 3001;
 
-const server = createServer(app)
+const server = http.createServer(app)
 app.use(cors());
 
 
@@ -45,8 +44,8 @@ io.on('connection', (socket) => {
 
 
 
-app.use(urlencoded({ extended: false }));
-app.use(json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // cookie parser needs to be before the api routes
 app.use(cookieParser())
@@ -55,14 +54,15 @@ app.use('/api', api)
 
 if (process.env.NODE_ENV === 'production') {
   // serves react app when in production
-  app.use(staticFiles(join(__dirname, '../client/dist')));
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+
   app.get('*', (req, res) => {
-    res.sendFile(join(__dirname, '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 }
 
 server.listen(PORT, () => {
-  db.sync({ force: false })
+  // db.sync({ force: false })
   console.log(`API server running on port ${PORT}!`);
 })
 

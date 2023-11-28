@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/connection.js';
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../config/connection');
 
 
 class UserChatJunc extends Model {};
@@ -46,4 +46,4 @@ UserChatJunc.init(
     }
 )
 
-export default UserChatJunc;
+module.exports = { UserChatJunc }

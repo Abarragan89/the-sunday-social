@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/connection.js';
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../config/connection');
 
 
 class TempResetToken extends Model {};
@@ -33,4 +33,4 @@ TempResetToken.init(
     }
 )
 
-export default TempResetToken;
+module.exports = { TempResetToken }

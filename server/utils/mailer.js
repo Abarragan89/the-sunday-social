@@ -1,6 +1,6 @@
-import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
-import 'dotenv/config';
+const { nodemailer } = require('nodemailer')
+const { google } = require('googleapis')
+require('dotenv').config();
 const OAuth2 = google.auth.OAuth2;
 const OAuth2_client = new OAuth2(process.env.CLIENT_ID, process.env.CLIENT_SECRET)
 OAuth2_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
@@ -57,4 +57,4 @@ async function resetPassword(toUser, tempToken) {
     })
 }
 
-export default resetPassword;
+module.exports = { resetPassword }

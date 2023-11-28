@@ -1,11 +1,6 @@
-import express from 'express';
-import { Post } from '../models/index.js'
-import { Comment } from '../models/index.js'
-import { User } from '../models/index.js'
-import { Likes } from '../models/index.js'
-import { verifyToken } from '../utils/auth.js';
-
-const router = express.Router();
+const router = require('express').Router();
+const { Post, Comment, User, Likes } = require('../models');
+const { verifyToken } = require('../utils/auth');
 
 // this is for the homeroutes to get the ids to pass to the Post components
 router.get('/getAllPosts', async (req, res) => {
@@ -155,4 +150,4 @@ router.get('/getTotalPostNotifications', verifyToken, async(req, res) => {
     }
 })
 
-export default router;
+module.exports = router;

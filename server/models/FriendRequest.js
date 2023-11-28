@@ -1,5 +1,5 @@
-import { DataTypes, Model } from 'sequelize';
-import sequelize from '../config/connection.js';
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../config/connection');
 
 
 class FriendRequest extends Model {};
@@ -37,4 +37,4 @@ FriendRequest.init(
     }
 )
 
-export default FriendRequest;
+module.exports = { FriendRequest }

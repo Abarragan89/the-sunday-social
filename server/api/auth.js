@@ -1,8 +1,7 @@
-import express from 'express'
-import { User } from '../models/index.js';
-import { signToken } from '../utils/auth.js';
+const router = require('express').Router();
+const { User } = require('../models');
+const { signToken } = require('../utils/auth');
 
-const router = express.Router()
 
 router.post('/login', async (req, res) => {
     try {
@@ -62,4 +61,4 @@ router.post('/signup', async (req, res) => {
 })
 
 
-export default router;
+module.exports = router;

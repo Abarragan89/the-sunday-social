@@ -134,6 +134,7 @@ function LoginModal({ setShowModal }) {
             });
 
             const response = await data.json()
+            console.log(response)
             if (!response) {
                 console.log('error sending ')
             } else {

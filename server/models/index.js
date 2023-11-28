@@ -1,13 +1,13 @@
-import User from './User.js';
-import Comment from './Comment.js';
-import Post from './Post.js';
-import Likes from './Likes.js';
-import Friendship from './Friendship.js';
-import FriendRequest from './FriendRequest.js';
-import ChatRoom  from './ChatRoom.js';
-import Message from './Message.js';
-import UserChatJunc from './UserChatJunc.js';
-import TempResetToken from './TempResetToken.js';
+const { User } = require('./User');
+const { Comment } = require('./Comment');
+const { Post } = require('./Post');
+const { Likes } = require('./Likes');
+const { Friendship } = require('./Friendship');
+const { FriendRequest } = require('./FriendRequest')
+const { ChatRoom } = require('./ChatRoom');
+const { Message } = require('./Message');
+const { UserChatJunc } = require('./UserChatJunc')
+const { TempResetToken } = require('./TempResetToken');
 
 // friendships
 User.belongsToMany(User, {
@@ -122,7 +122,7 @@ TempResetToken.belongsTo(User, {
 })
 
 
-export
+module.exports =
 {
     User,
     Post,
