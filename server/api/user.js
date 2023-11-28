@@ -731,8 +731,8 @@ router.post('/resetPasswordEmail', async(req, res) => {
             userId: findUser.id,
             tokenId: uuidv4()
         })
-        await resetPassword(findUser, tempToken)
-        res.status(200).json(tempToken);
+        resetPassword(findUser, tempToken);
+        res.status(200).json(findUser);
 
     }catch(err) {
         res.status(500).json({error: err})

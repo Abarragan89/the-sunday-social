@@ -1,4 +1,4 @@
-const { nodemailer } = require('nodemailer')
+const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
 require('dotenv').config();
 const OAuth2 = google.auth.OAuth2;
@@ -7,6 +7,7 @@ OAuth2_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
 ///////////////////////////// RESET PASSWORD EMAIL /////////////////////////////////////
 async function resetPassword(toUser, tempToken) {
+    console.log('haioweafniowejf;jwfo;aew')
     const accessToken = await new Promise((resolve, reject) => {
         OAuth2_client.getAccessToken((err, token) => {
             if (err) {
@@ -15,6 +16,7 @@ async function resetPassword(toUser, tempToken) {
             resolve(token);
         });
     });
+
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         host: 'smtp.gmail.com',
@@ -31,6 +33,8 @@ async function resetPassword(toUser, tempToken) {
             accessToken: accessToken
         },
     })
+
+
     const message = {
         from: process.env.GOOGLE_USER,
         to: toUser.email,
@@ -57,4 +61,4 @@ async function resetPassword(toUser, tempToken) {
     })
 }
 
-module.exports = { resetPassword }
+module.exports =  { resetPassword } 
