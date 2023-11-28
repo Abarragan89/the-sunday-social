@@ -6,7 +6,7 @@ import ShowChatUserListModal from "../showChatUserListModal";
 import { getTime } from "../../utils/formatDate";
 import { IoMdSend, IoIosMore } from 'react-icons/io'
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:5173');
+const socket = io.connect('https://the-sunday-social-b780c9b989cc.herokuapp.com/');
 import './index.css'
 
 function ChatBox({
