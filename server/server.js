@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => {
     console.log('Database connected successfully');
     // Enable Sequelize query logging
