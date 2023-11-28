@@ -21,7 +21,7 @@ router.post('/login', async (req, res) => {
             res.status(200).json(user)
         }
     } catch(e) {
-        console.log('error logging in ', e)
+        res.status(500).json({error: e})
     }
 })
 
@@ -57,7 +57,7 @@ router.post('/signup', async (req, res) => {
             return res.status(200).json(newUser)
         }
     } catch (err) {
-        res.status(400).json({ err })
+        res.status(500).json({ err })
     }
 })
 
