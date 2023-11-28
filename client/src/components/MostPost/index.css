@@ -45,7 +45,8 @@
 
 
 .profile-pic-in-most-post {
-    width: 40px
+    width: 40px;
+    border-radius: 20%;
 }
 
 .post-info-most-post {
