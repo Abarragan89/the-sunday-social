@@ -4,10 +4,10 @@
   "description": "social-media-app",
   "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently  \"cd server && npm run watch\" \" cd client && npm run dev\"",
     "start": "node server/server.js",
-    "build": "cd server && npm install && cd ../client && npm install"
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "build": "cd client && npm run build"
   },
   "author": "",
   "license": "ISC",
