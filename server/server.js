@@ -16,7 +16,7 @@ app.use(cors());
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://the-sunday-social-b780c9b989cc.herokuapp.com/',
+    origin: process.env.NODE_ENV === 'production' ? 'https://the-sunday-social-b780c9b989cc.herokuapp.com/' : 'http://localhost:5173',
     methods: ['GET', 'POST']
   }
 })

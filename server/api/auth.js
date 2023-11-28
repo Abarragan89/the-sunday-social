@@ -12,11 +12,12 @@ router.post('/login', async (req, res) => {
             }
         });
         if (!user) {
-            res.status(400).json({ error: 'no user'})
+            res.status(400).json({ error: 'Wrong Credentials'})
         } else if (!user.checkPassword(data.password)) {
-            res.status(400).json({ error: 'wrong password'})
+            res.status(400).json({ error: 'Wrong Credentials'})
         } else {
             signToken(user, res)
+            res.status(200).json(user)
         }
     } catch(e) {
         res.status(500).json({error: e})
@@ -52,6 +53,7 @@ router.post('/signup', async (req, res) => {
         } else {
             // create JWT and save it to HTTP cookie
             signToken(newUser, res)
+            res.status(200).json(res)
         }
     } catch (err) {
         res.status(500).json({ err })
