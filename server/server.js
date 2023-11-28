@@ -41,14 +41,12 @@ io.on('connection', (socket) => {
 
 })
 
-
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // cookie parser needs to be before the api routes
-app.use(cookieParser())
-app.use('/api', api)
+app.use(cookieParser());
+app.use('/api', api);
 
 
 if (process.env.NODE_ENV === 'production') {
@@ -61,7 +59,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 server.listen(PORT, () => {
-  db.sync({ force: false })
+  db.sync({ force: true })
   console.log(`API server running on port ${PORT}!`);
 })
 
