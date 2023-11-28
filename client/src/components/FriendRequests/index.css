@@ -1,0 +1,36 @@
+.friend-request-aside {
+    margin: 0 20px;
+    width: 280px;
+    padding: 20px;
+    padding-top: 0;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    max-height: 500px;
+    overflow-y: auto;
+    height: 350px;
+
+}
+
+.friend-request-aside {
+    font-size: .9rem;
+}
+
+.friend-request-aside::-webkit-scrollbar {
+    width: 2px;
+}
+
+.friend-request-results {
+    margin-top: 70px;
+}
+
+.pending-text {
+    font-size: .85rem;
+    padding-top: 5px;
+    color: var(--accent-color)
+
+}
+
+.no-request-text {
+    color: var(--accent-color);
+    font-style: italic;
+}

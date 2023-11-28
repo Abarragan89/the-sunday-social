@@ -1,0 +1,116 @@
+.modal {
+    overflow-y: auto;
+}
+.modal::-webkit-scrollbar {
+    width: 2px;
+}
+
+.post-modal-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.post-modal-text {
+    text-align: justify;
+    line-height: 1.2;
+    font-size: .98rem;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.comment-textarea-div {
+    position: sticky;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    background-color: var(--primary-color);
+    padding: 15px;
+}
+
+.comment-textarea {
+    resize: none;
+    margin: 0 auto;
+    width: 100%;
+    font-weight: 500;
+    border: none;
+    background-color: var(--off-white);
+    padding: 8px;
+    height: 60px;
+    letter-spacing: 1px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0 ;
+    color: var(--black);
+}
+.comment-textarea::placeholder {
+    color: rgba(13, 13, 156, 0.7);
+    font-size: .95rem;
+    font-style: italic;
+}
+
+.comment-textarea::-webkit-scrollbar {
+    width: 2px;
+}
+
+.comment-textarea:focus {
+    outline: none;
+    border: none;
+}
+
+.comment-textarea-div .send-icon {
+    background-color: var(--off-white);
+    text-align: right;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 0 10px 2px 0;
+    margin-top: -10px;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    transition: .15s;
+
+}
+
+.comment-textarea-div .send-icon:hover { 
+    cursor: pointer;
+    color: var(--tertiary-color)
+}
+
+
+.comment-section-div {
+    margin-top: 20px;
+    padding-top: 10px;
+    font-size: .95rem;
+    border-top: 1px solid var(--accent-color);
+    white-space: pre-wrap;
+    line-height: 1.2;
+}
+.user-comment-info, .post-modal-user-info {
+    font-size: .93rem;
+    color: var(--tertiary-color);
+    margin-bottom: 5px;
+    line-height: 1.2;
+}
+.user-comment-info {
+    font-size: .85rem;
+}
+
+.single-comment-div {
+    margin-bottom: 10px;
+    padding: 0 10px;
+}
+
+.single-comment {
+    padding: 5px;
+    padding-top: 0;
+    margin-left: 15px;
+}
+
+
+.signin-to-comment-text {
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--accent-color);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+

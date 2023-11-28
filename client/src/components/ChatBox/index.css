@@ -1,0 +1,234 @@
+.chatbox-main-section {
+    margin: 0 auto;
+    display: flex;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+.messages-title {
+    color: var(--accent-color);
+    display: block;
+    text-decoration: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 67%;
+    text-align: center;
+    z-index: 4;
+    letter-spacing: 2px;
+    background-color: var(--primary-color);
+    padding: 15px;
+    border-bottom: 1px solid var(--black)
+}
+
+.chatbox-aside {
+    flex: 1;
+    background-color: var(--primary-color);
+    overflow-y: scroll;
+    width: 100%;
+    padding: 0;
+    padding-bottom: 50px;
+}
+.chatbox-aside::-webkit-scrollbar {
+    width: 0px;
+}
+
+.link-container {
+    position: relative;
+}
+
+.chatbox-aside .aside-ul-list {
+    margin-top: 48px;
+    display: block;
+}
+
+.chatbox-aside .chat-aside-link{
+    display: block;
+    text-decoration: none;
+    position: relative;
+    color: var(--off-white);
+    padding: 7px;
+    padding-right: 45px;
+    line-height: 1.2;
+    min-height: 45px;
+    max-height: 45px;
+    word-break: keep-all;
+    overflow: hidden;
+    border-bottom: 1px solid var(--black);
+}
+
+.showAllUsersInChat {
+    position: absolute;
+    font-size: 1.5rem;
+    top: 8px;
+    right: 7px;
+    z-index:20;
+}
+
+
+.chatbox-aside .chat-aside-link:hover {
+    cursor: pointer;
+    background-color: var(--primary-highlight);
+}
+
+.chatbox-aside .active-chat {
+   background-color: var(--secondary-color);
+}
+
+.notification-bubble-in-message-aside {
+    position: absolute;
+    width: fit-content;
+    color: var(--off-white);
+    text-align: center;
+    font-size: 1rem;
+    padding: 4px 8px;
+    top: 3px;
+    right: 5px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 30;
+}
+
+.message-text-screen {
+    flex: 2;
+    position: relative;
+    overflow-y: scroll;
+    background-color: var(--off-white);
+    color: var(--off-white);
+    border-top: 1px solid black;
+}
+
+.message-text-screen h1 {
+    background-color: var(--primary-color);
+    padding: 15px 5px;
+    font-weight: 300;
+    text-align: center;
+    border-left: 1px solid var(--black);
+    color: var(--accent-color)
+}
+
+.message-text-screen::-webkit-scrollbar {
+    width: 0px;
+}
+
+.message-justify-left {
+    display: flex;
+    justify-content: flex-start;
+}
+.message-justify-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-bubble {
+    margin-bottom: 15px;
+    padding: 10px;
+    padding-bottom: 5px;
+    min-width: 140px;
+    margin-top: 20px;
+    max-width: 70%;
+    line-height: 1.3;
+    position: relative;
+    font-size: .93rem;
+    border-radius: var(--border-radius);
+    word-wrap: break-word;
+}
+
+.message-bubble:last-child() {
+    margin-bottom: 100px;
+}
+
+.incoming-message-bubble {
+    background-color: var(--primary-color);
+    margin-left: 20px;
+   
+}
+
+.outgoing-message-bubble {
+    background-color: var(--secondary-color);
+    right: 0px;
+    margin-right: 20px;
+}
+
+.message-timestamp {
+    font-size: .78rem;
+    margin-top: 10px;
+    font-style: italic;
+    display: flex;
+    justify-content: space-between;
+
+}
+.sender-info-div {
+    position: absolute;
+    padding-top: 10px;
+    display:flex;
+    justify-content: space-between;
+    font-size: .86rem;
+    color: var(--primary-color);
+    top: -27px;
+    left: 5px;
+}
+
+.select-chat-channel-text {
+    position: absolute;
+    font-size: 1.2rem;
+    text-align: center;
+    font-style: italic;
+    top: 37%;
+    right: 0;
+    left: 0;
+    color: var(--primary-color)
+}
+
+.text-messages-area {
+    margin-bottom: 120px;
+}
+
+.type-message-div {
+    background-color: var(--primary-color);
+    height: 130px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 66.8%;
+    border-left: 1px solid black;
+}
+
+.type-message-div textarea {
+    border-radius: var(--border-radius);
+    background-color: var(--off-white);
+    resize: none;
+    width: 90%;
+    height: 70px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 10px;
+    font-weight: 300;
+}
+
+.type-message-div textarea:focus {
+    outline: none;
+    border: none;
+}
+
+.type-message-div .send-icon {
+    position: absolute;
+    bottom: 40px;
+    right: 7%;
+    font-size: 1.8rem;
+    color: var(--primary-color)
+}
+
+.type-message-div .send-icon:hover {
+    cursor: pointer;
+    color: var(--tertiary-color)
+}
+
+
+

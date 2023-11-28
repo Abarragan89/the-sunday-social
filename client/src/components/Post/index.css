@@ -1,0 +1,99 @@
+.post-section {
+  min-width: 330px;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 20px;
+  border-radius: var(--border-radius);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.4);
+  transition: 0.08s;
+}
+
+.notification-on-post-profile {
+  position: relative;
+  top: -30px;
+  right: 20px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 30;
+  width: fit-content;
+  color: var(--off-white);
+  text-align: center;
+  font-size: 1rem;
+  padding: 4px 10px;
+}
+
+.post-section:hover {
+  cursor: pointer;
+  transform: scale(1.007);
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.2);
+}
+
+.post-section:active {
+  transform: scale(0.995);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
+}
+
+.post-header {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--accent-color);
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  padding-bottom: 0px;
+  font-size: 0.93rem;
+}
+
+.post-header p:first-child {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.post-header p:nth-child(2) {
+  font-size: 0.9rem;
+}
+
+.post-body {
+  padding: 5px 30px;
+  line-height: 1.2;
+  font-size: 1rem;
+  text-align: justify;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 0.93rem;
+  color: var(--accent-color);
+  padding: 5px 20px;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+/* flex box for the number of likes and like icon */
+.post-footer div {
+  display: flex;
+  align-items: center;
+}
+
+/* this is the hover over 'comments' and 'comment' */
+.post-footer .like-icon:hover {
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+/* styles for the like icon */
+.post-footer .like-icon {
+  font-size: 1.1rem;
+  margin-left: 5px;
+}
+
+.click-to-edit-modal-text {
+  font-size: 0.9rem;
+  color: var(--off-white);
+  font-style: italic;
+}

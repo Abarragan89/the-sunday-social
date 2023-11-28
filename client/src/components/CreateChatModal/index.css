@@ -1,0 +1,83 @@
+.modal-container .no-padding-modal {
+    width: fit-content;
+    min-width: 330px;
+    max-width: 700px;
+    max-height: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 20px 0;
+    padding-bottom: 0px;
+    background-color: var(--primary-color);
+    min-height: 250px;
+    transform: translateY(-500px);
+    animation: slideDown .2s ease-out both;
+}
+
+
+.single-chat-friend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+
+}       
+
+.single-chat-friend input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    outline: none;
+    border: 1px solid var(--accent-color);
+    width: 20px;
+    height: 20px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.single-chat-friend input:checked {
+    background-color: var(--accent-color);
+}
+
+
+.single-chat-friend input::before {
+    content: '\2713'; /* Unicode character for a checkmark */
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: -6px;
+    left: 0px;
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    display: none; /* Initially hide the checkmark */
+}
+
+.single-chat-friend input:checked::before {
+    display: block
+}
+
+
+.single-chat-friend:hover {
+    cursor: pointer;
+    background-color: var(--primary-highlight);
+}
+
+.friend-name-pic-chatlist {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.friend-name-pic-chatlist figure {
+    margin-right: 10px;
+}
+
+.profile-pic-in-chat-modal {
+    width: 35px;
+}
+
+.create-chat-btn {
+    margin-top: 20px;
+}

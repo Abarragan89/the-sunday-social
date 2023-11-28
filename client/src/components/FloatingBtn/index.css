@@ -1,0 +1,55 @@
+/* Floating Add Post Button */
+.add-post-floating-btn {
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  font-weight: 500;
+  color: var(--secondary-color);
+  padding: 0 15px;
+  position: fixed;
+  bottom: 40px;
+  font-size: 4rem;
+  z-index: 40;
+  border: 1px solid var(--tertiary-c0lor);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
+}
+
+.initial-position {
+  right: -100px;
+}
+
+.add-post-floating-btn-slide-in {
+  animation: slideInFromBottom .2s .3s both ease-in;
+}
+
+@keyframes slideInFromBottom {
+  to {
+    right: 20px;
+  }  
+}
+
+.add-post-floating-btn:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.4);
+}
+
+.add-post-floating-btn:active {
+  transform: scale(1);
+  box-shadow: none;
+}
+
+
+.remove-position {
+  right: 20px;
+}
+
+.remove-floating-button {
+  animation: remoteFloatingButton .2s both;
+}
+
+@keyframes remoteFloatingButton {
+  to {
+    right: 20px;
+    transform: translateY(120px);
+  }
+}

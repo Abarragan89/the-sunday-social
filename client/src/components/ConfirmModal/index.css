@@ -1,0 +1,11 @@
+.confirm-modal-text {
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.confirm-modal-text span {
+    color: var(--accent-color);
+    font-weight: 500;
+}

@@ -1,0 +1,68 @@
+.navLinks ul {
+  padding-top: 8px;
+}
+
+.navLinks ul li,
+.navLinks ul li a {
+  list-style-type: none;
+  position: relative;
+  display: inline;
+  font-size: 1.65rem;
+  color: var(--off-white);
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.navLinks ul li:not(:last-child) {
+  padding-right: 40px;
+}
+.navLinks ul li:last-child {
+  padding-right: 15px;
+}
+
+/* style for logout */
+.navLinks ul li p {
+  display: inline;
+  margin-right: 0;
+  font-size: 1rem;
+}
+
+.navLinks ul li a:hover,
+.navLinks ul li p:hover {
+  cursor: pointer;
+  color: var(--accent-color);
+}
+
+.profile-pic-in-nav {
+  width: 32px;
+  border-radius: 50%;
+}
+
+.notification-bubble-in-nav {
+    position: absolute;
+    width: fit-content;
+    color: var(--off-white);
+    text-align: center;
+    font-size: 1rem;
+    padding: 2px 7px;
+    top: -10px;
+    right: -8px;
+    background-color: red;
+    border-radius: 50%;
+    z-index: 30;
+}
+
+/* mobile styles */
+@media screen and (max-width: 500px) {
+  .navLinks ul li,
+  .navLinks ul li a {
+    font-size: 1.6rem;
+  }
+
+  .navLinks ul li:not(:last-child) {
+    padding-right: 25px;
+  }
+  .profile-pic-in-nav {
+    width: 30px;
+  }
+}

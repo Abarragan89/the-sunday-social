@@ -1,0 +1,110 @@
+.friend-finder-aside {
+    margin: 0 20px;
+    width: 280px;
+    height: 350px;
+    padding: 20px;
+    padding-top: 0;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 30px;
+}
+
+.friend-finder-aside {
+    font-size: .9rem;
+}
+
+.top-search-bar {
+    position: absolute;
+    padding-top: 30px;
+    background-color: var(--primary-color);
+}
+
+.friend-finder-aside::-webkit-scrollbar {
+    width: 2px;
+}
+
+.friend-search-option {
+    display: flex;
+}
+
+.friend-search-option .make-active {
+    color: var(--tertiary-color);
+    border-bottom: 2px solid var(--tertiary-color);
+    padding-bottom: 1px;
+    
+}
+
+.friend-search-option h2:first-child {
+    margin-right: 30px;
+}
+
+.friend-search-option h2:hover {
+    cursor: pointer;
+    color: var(--tertiary-color);
+}
+
+.search-results {
+    margin-top: 135px;
+}
+
+.search-input-div {
+    position: relative;
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.search-input-div svg {
+    position: absolute;
+    left: 5px;
+    font-size: 1.2rem;
+    top: 18px;
+    color: var(--secondary-color)
+}
+
+.search-friends-input {
+    font-weight: 500;
+    border: none;
+    background-color: var(--off-white);
+    border-radius: var(--border-radius);
+    padding: 8px;
+    padding-left: 30px;
+    letter-spacing: 1px;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    margin-top: 10px;
+    width: 200px
+}
+
+.search-friends-input:focus {
+    outline: none;
+    border: none;
+}
+
+.single-friend {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.single-friend .button-row {
+    display: flex;
+}
+
+.button-row a, .button-row p {
+    text-decoration: none;
+    display: inline-block;
+    justify-content: space-around;
+    font-size: .9rem;
+    margin-top: 8px;
+    color: var(--accent-color)
+}
+.button-row a:hover, .button-row p:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.single-friend a {
+    margin-right: 15px;
+}
+
