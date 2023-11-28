@@ -58,9 +58,18 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-server.listen(PORT, () => {
-  db.sync({ force: true })
-  console.log(`API server running on port ${PORT}!`);
-})
+
+db.sync({ force: false })
+  .then(() => {
+    console.log('Database connected successfully');
+    // Enable Sequelize query logging
+    db.options.logging = console.log;
+    server.listen(PORT, () => {
+      console.log(`API server running on port ${PORT}!`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error connecting to the database:', error);
+  });
 
 
