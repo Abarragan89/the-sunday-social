@@ -7,7 +7,6 @@ OAuth2_client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
 ///////////////////////////// RESET PASSWORD EMAIL /////////////////////////////////////
 async function resetPassword(toUser, tempToken) {
-    console.log('haioweafniowejf;jwfo;aew')
     const accessToken = await new Promise((resolve, reject) => {
         OAuth2_client.getAccessToken((err, token) => {
             if (err) {

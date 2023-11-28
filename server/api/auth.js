@@ -14,7 +14,6 @@ router.post('/login', async (req, res) => {
         if (!user) {
             res.status(400).json({ error: 'no user'})
         } else if (!user.checkPassword(data.password)) {
-            console.log(!user.checkPassword(data.password))
             res.status(400).json({ error: 'wrong password'})
         } else {
             signToken(user, res)

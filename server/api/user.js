@@ -27,9 +27,8 @@ router.get('/', verifyToken, async (req, res) => {
         });
 
         if (!user) {
-            res.status(400).json({ error: 'you must log in' })
+            return res.status(400).json({ error: 'you must log in' })
         }
-
         res.status(200).json(user)
     } catch (err) {
         res.status(500).json({ error: 'user not found' })
@@ -731,7 +730,7 @@ router.post('/resetPasswordEmail', async(req, res) => {
             userId: findUser.id,
             tokenId: uuidv4()
         })
-        resetPassword(findUser, tempToken);
+        await resetPassword(findUser, tempToken);
         res.status(200).json(findUser);
 
     }catch(err) {
