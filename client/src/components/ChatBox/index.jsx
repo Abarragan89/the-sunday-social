@@ -14,7 +14,6 @@ function ChatBox({
     userId,
     triggerModalStatus,
     triggerRefreshAmongPages,
-    // setTriggerRefreshAmongPages
 }) {
     const { chatId } = useParams();
     const [allMessages, setAllMessage] = useState(null);

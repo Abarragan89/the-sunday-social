@@ -77,10 +77,6 @@ db.sync({ force: false })
 
 
 
-// README!!!!!!!!
-// manifest.json();
-// error handling for pages when youre not logged in
 // DELETE USER
-// ADD A README
 // Put Project on My Portfolio
 // Post on linkedIn

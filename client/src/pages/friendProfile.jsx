@@ -42,76 +42,82 @@ function FriendProfilePage() {
 
 
     return (
-        <main>
-            {/* FLOATING BUTTON */}
-            {showAddPostModal &&
-                <AddPostModal
-                    setShowPostModal={setShowAddPostModal}
-                    setMakeButtonDisappear={setMakeButtonDisappear}
+        <>
+            {userData?.id ?
+                <main>
+                    {/* FLOATING BUTTON */}
+                    {showAddPostModal &&
+                        <AddPostModal
+                            setShowPostModal={setShowAddPostModal}
+                            setMakeButtonDisappear={setMakeButtonDisappear}
 
-                />
-            }
-
-            {showEditModal &&
-                <EditProfileModal
-                    setShowModal={setShowEditModal}
-                    userData={userData}
-                    triggerRefresh={triggerRefresh}
-                    setTriggerRefresh={setTriggerRefresh}
-                />
-            }
-            <FloatingButton
-                setShowAddPostModal={setShowAddPostModal}
-                setMakeButtonDisappear={setMakeButtonDisappear}
-                makeButtonDisappear={makeButtonDisappear}
-                showAddPostModal={showAddPostModal}
-            />
-            {/* User Info */}
-            <h2 className="section-heading"><span>Friend Info</span></h2>
-
-
-            <section className="profile-stats-main-section">
-                <div className="user-profile-image-bio">
-
-                    <Image className='user-profile-image' cloudName='dp6owwg93' publicId={photoUrl} />
-
-                    <h3>Headline</h3>
-
-                    <p className="user-bio">&ldquo;{userData?.headline}&rdquo;</p>
-
-                    <h3>Website</h3>
-                    <a className="view-work-link" target="_blank" rel="noopener noreferrer" href={userData?.website}>View my work</a>
-                </div>
-
-                <div className="user-stats">
-                    <h3>Searchable Qualities</h3>
-                    <p>Username: <span>{userData && userData?.username}</span></p>
-                    <p>Email: <span>{userData && userData?.email}</span></p>
-                    <p>Relationship Status: <span>{userData && userData?.relationshipStatus}</span></p>
-                    <p>School: <span>{userData && userData?.school}</span></p>
-                    <p>Work: <span>{userData && userData?.work}</span></p>
-                    <p>Currently Learning: <span>{userData && userData?.currentlyLearning}</span></p>
-                    <p>Hobbies: <span>{userData && userData?.hobbies}</span></p>
-                    <p>Pet Peeve: <span>{userData && userData?.petPeeve}</span></p>
-                </div>
-            </section>
-
-
-            {/* User Posts */}
-            <h2 className="section-heading"><span>{userData?.username}&apos;s Posts</span></h2>
-            {userData &&
-                userData?.Posts.map((post, index) => {
-                    return (
-                        <Post
-                            key={index}
-                            postId={post.id}
-                            setTriggerRefresh={setTriggerRefresh}
-                            triggerRefresh={triggerRefresh}
                         />
-                    )
-                })
+                    }
+
+                    {showEditModal &&
+                        <EditProfileModal
+                            setShowModal={setShowEditModal}
+                            userData={userData}
+                            triggerRefresh={triggerRefresh}
+                            setTriggerRefresh={setTriggerRefresh}
+                        />
+                    }
+                    <FloatingButton
+                        setShowAddPostModal={setShowAddPostModal}
+                        setMakeButtonDisappear={setMakeButtonDisappear}
+                        makeButtonDisappear={makeButtonDisappear}
+                        showAddPostModal={showAddPostModal}
+                    />
+                    {/* User Info */}
+                    <h2 className="section-heading"><span>Friend Info</span></h2>
+
+
+                    <section className="profile-stats-main-section">
+                        <div className="user-profile-image-bio">
+
+                            <Image className='user-profile-image' cloudName='dp6owwg93' publicId={photoUrl} />
+
+                            <h3>Headline</h3>
+
+                            <p className="user-bio">&ldquo;{userData?.headline}&rdquo;</p>
+
+                            <h3>Website</h3>
+                            <a className="view-work-link" target="_blank" rel="noopener noreferrer" href={userData?.website}>View my work</a>
+                        </div>
+
+                        <div className="user-stats">
+                            <h3>Searchable Qualities</h3>
+                            <p>Username: <span>{userData && userData?.username}</span></p>
+                            <p>Email: <span>{userData && userData?.email}</span></p>
+                            <p>Relationship Status: <span>{userData && userData?.relationshipStatus}</span></p>
+                            <p>School: <span>{userData && userData?.school}</span></p>
+                            <p>Work: <span>{userData && userData?.work}</span></p>
+                            <p>Currently Learning: <span>{userData && userData?.currentlyLearning}</span></p>
+                            <p>Hobbies: <span>{userData && userData?.hobbies}</span></p>
+                            <p>Pet Peeve: <span>{userData && userData?.petPeeve}</span></p>
+                        </div>
+                    </section>
+
+
+                    {/* User Posts */}
+                    <h2 className="section-heading"><span>{userData?.username}&apos;s Posts</span></h2>
+                    {userData &&
+                        userData?.Posts.map((post, index) => {
+                            return (
+                                <Post
+                                    key={index}
+                                    postId={post.id}
+                                    setTriggerRefresh={setTriggerRefresh}
+                                    triggerRefresh={triggerRefresh}
+                                />
+                            )
+                        })
+                    }
+                </main>
+                :
+                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
             }
-        </main>
+        </>
     )
 
 }

@@ -389,6 +389,16 @@ ol, ul {
   right: 15px;
 }
 
+
+.sign-in-to-view-page-text {
+  text-align: center;
+  font-size: 1.2rem;
+}
+.sign-in-to-view-page-text span {
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
 /* //////////////////// Utilities////////////////// */
 
 /* flex box */

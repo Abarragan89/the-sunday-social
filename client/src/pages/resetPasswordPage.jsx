@@ -17,17 +17,18 @@ function ResetPasswordPage() {
         getUserInfo();
     }, [tokenId])
 
+
     async function getUserInfo() {
         try {
             const data = await fetch(`/api/user/verifyUserByToken/${tokenId}`);
             const response = await data.json();
+            console.log(response)
             setUserData(response)
         } catch(err) {
             console.log(err)
         }
     }
-
-
+    console.log(tokenId)
 
     async function resetPasswordHandler(e) {
         e.preventDefault();
@@ -56,6 +57,8 @@ function ResetPasswordPage() {
     }
 
     return (
+        <>
+        {userData?.id ? 
         <>
             <h3 className="modal-title">Reset Password</h3>
             <form className="login-form" onSubmit={(e) => resetPasswordHandler(e)}>
@@ -86,6 +89,10 @@ function ResetPasswordPage() {
                     <button className={`submit-btn ${confirmPassword === password && password.length > 7 ? '' : 'disabled-btn'}`} type="submit">Confirm</button>
                 }
             </form>
+        </>
+        :
+        <p className="sign-in-to-view-page-text">Password Reset has expired, please try again.</p>
+        }
         </>
     )
 }

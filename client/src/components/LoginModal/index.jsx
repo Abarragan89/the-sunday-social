@@ -121,7 +121,9 @@ function LoginModal({ setShowModal }) {
 
     async function resetPasswordHandler(e) {
         e.preventDefault();
+        if (isLoading) return;
         if (email === '') return;
+        setIsLoading(true)
         try {
             const data = await fetch('/api/user/resetPasswordEmail', {
                 method: 'POST',
@@ -140,6 +142,7 @@ function LoginModal({ setShowModal }) {
             } else {
                 forgotEmailText.current.innerHTML = 'Check your email <span>(including Spam/Junk Folder)</span> to reset your password'
             }
+            setIsLoading(false)
         } catch(err) {
             console.log(err)
         }

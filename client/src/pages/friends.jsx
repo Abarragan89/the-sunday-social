@@ -24,35 +24,41 @@ function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
     }, [showAddPostModal])
 
     return (
-        <main>
-            {showAddPostModal &&
-                <AddPostModal
-                    setShowPostModal={setShowAddPostModal}
-                    setMakeButtonDisappear={setMakeButtonDisappear}
-                />
+        <>
+            {userData?.id ?
+                <main>
+                    {showAddPostModal &&
+                        <AddPostModal
+                            setShowPostModal={setShowAddPostModal}
+                            setMakeButtonDisappear={setMakeButtonDisappear}
+                        />
+                    }
+
+                    <FloatingButton
+                        setShowAddPostModal={setShowAddPostModal}
+                        setMakeButtonDisappear={setMakeButtonDisappear}
+                        makeButtonDisappear={makeButtonDisappear}
+                        showAddPostModal={showAddPostModal} />
+
+                    <main className="friend-page-main">
+                        <FriendFinder
+                            setTriggerRefreshInFriends={setTriggerRefreshInFriends}
+                            triggerRefreshInFriends={triggerRefreshInFriends}
+                            userId={userData?.id}
+                            triggerRefreshAmongPages={triggerRefreshAmongPages}
+                            setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
+                        />
+
+                        <FriendRequests
+                            setTriggerRefreshInFriends={setTriggerRefreshInFriends}
+                            triggerRefreshInFriends={triggerRefreshInFriends}
+                        />
+                    </main>
+                </main>
+                :
+                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
             }
-
-            <FloatingButton
-                setShowAddPostModal={setShowAddPostModal}
-                setMakeButtonDisappear={setMakeButtonDisappear}
-                makeButtonDisappear={makeButtonDisappear}
-                showAddPostModal={showAddPostModal} />
-
-            <main className="friend-page-main">
-                <FriendFinder
-                    setTriggerRefreshInFriends={setTriggerRefreshInFriends}
-                    triggerRefreshInFriends={triggerRefreshInFriends}
-                    userId={userData?.id}
-                    triggerRefreshAmongPages={triggerRefreshAmongPages}
-                    setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
-                />
-
-                <FriendRequests
-                    setTriggerRefreshInFriends={setTriggerRefreshInFriends}
-                    triggerRefreshInFriends={triggerRefreshInFriends}
-                />
-            </main>
-        </main>
+        </>
 
     )
 }

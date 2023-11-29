@@ -84,97 +84,103 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) 
         }
     }
     return (
-        <main>
-            {/* FLOATING BUTTON */}
-            {showAddPostModal &&
-                <AddPostModal
-                    setShowPostModal={setShowAddPostModal}
-                    setMakeButtonDisappear={setMakeButtonDisappear}
+        <>
+            {userData?.id ?
+                <main>
+                    {/* FLOATING BUTTON */}
+                    {showAddPostModal &&
+                        <AddPostModal
+                            setShowPostModal={setShowAddPostModal}
+                            setMakeButtonDisappear={setMakeButtonDisappear}
 
-                />
-            }
-
-            {showEditModal &&
-                <EditProfileModal
-                    setShowModal={setShowEditModal}
-                    userData={userData}
-                    triggerRefresh={triggerRefresh}
-                    setTriggerRefresh={setTriggerRefresh}
-                />
-            }
-            <FloatingButton
-                setShowAddPostModal={setShowAddPostModal}
-                setMakeButtonDisappear={setMakeButtonDisappear}
-                makeButtonDisappear={makeButtonDisappear}
-                showAddPostModal={showAddPostModal}
-            />
-            {/* User Info */}
-
-            <p className="submit-btn logout-btn" onClick={handleLogout}>Logout</p>
-            <h2 className="section-heading"><span>Your Info</span></h2>
-
-            {userData &&
-                <section className="profile-stats-main-section">
-                    <div className="user-profile-image-bio">
-
-                        <Image className='user-profile-image' cloudName='dp6owwg93' publicId={photoUrl} />
-
-                        <input type="file" name="upload-pic" id="upload-pic-input"
-                            onChange={(event) => { setImageSelected(event.target.files[0]) }}
                         />
+                    }
 
-                        <h3>Headline
-                            {imageSelected ?
-                                <p className="open-file-profile-pic-btn" onClick={uploadImage}>
-                                    <FaCheckCircle />
-                                </p>
-                                :
-                                <label className="open-file-profile-pic-btn" htmlFor="upload-pic-input">
-                                    <IoCloudUpload />
-                                </label>
-                            }
-                        </h3>
-                        <p className="user-bio">&ldquo;{userData?.headline}&rdquo;</p>
+                    {showEditModal &&
+                        <EditProfileModal
+                            setShowModal={setShowEditModal}
+                            userData={userData}
+                            triggerRefresh={triggerRefresh}
+                            setTriggerRefresh={setTriggerRefresh}
+                        />
+                    }
+                    <FloatingButton
+                        setShowAddPostModal={setShowAddPostModal}
+                        setMakeButtonDisappear={setMakeButtonDisappear}
+                        makeButtonDisappear={makeButtonDisappear}
+                        showAddPostModal={showAddPostModal}
+                    />
+                    {/* User Info */}
 
-                        <h3>Website</h3>
-                        <a className="view-work-link" target="_blank" rel="noopener noreferrer" href={userData?.website}>View my work</a>
+                    <p className="submit-btn logout-btn" onClick={handleLogout}>Logout</p>
+                    <h2 className="section-heading"><span>Your Info</span></h2>
+
+                    {userData &&
+                        <section className="profile-stats-main-section">
+                            <div className="user-profile-image-bio">
+
+                                <Image className='user-profile-image' cloudName='dp6owwg93' publicId={photoUrl} />
+
+                                <input type="file" name="upload-pic" id="upload-pic-input"
+                                    onChange={(event) => { setImageSelected(event.target.files[0]) }}
+                                />
+
+                                <h3>Headline
+                                    {imageSelected ?
+                                        <p className="open-file-profile-pic-btn" onClick={uploadImage}>
+                                            <FaCheckCircle />
+                                        </p>
+                                        :
+                                        <label className="open-file-profile-pic-btn" htmlFor="upload-pic-input">
+                                            <IoCloudUpload />
+                                        </label>
+                                    }
+                                </h3>
+                                <p className="user-bio">&ldquo;{userData?.headline}&rdquo;</p>
+
+                                <h3>Website</h3>
+                                <a className="view-work-link" target="_blank" rel="noopener noreferrer" href={userData?.website}>View my work</a>
+                            </div>
+                            <button className="edit-profile-btn" onClick={() => setShowEditModal(true)}>edit</button>
+
+                            <div className="user-stats">
+                                <h3>Searchable Qualities</h3>
+                                <p>Username: <span>{userData && userData?.username}</span></p>
+                                <p>Email: <span>{userData && userData?.email}</span></p>
+                                <p>Relationship Status: <span>{userData && userData?.relationshipStatus}</span></p>
+                                <p>School: <span>{userData && userData?.school}</span></p>
+                                <p>Work: <span>{userData && userData?.work}</span></p>
+                                <p>Currently Learning: <span>{userData && userData?.currentlyLearning}</span></p>
+                                <p>Hobbies: <span>{userData && userData?.hobbies}</span></p>
+                                <p>Pet Peeve: <span>{userData && userData?.petPeeve}</span></p>
+                            </div>
+                        </section>
+                    }
+
+
+                    {/* User Posts */}
+                    <h2 className="section-heading"><span>My Posts</span></h2>
+
+                    <div className="user-post-container">
+                        {userData &&
+                            userData?.Posts.map((post, index) => {
+                                return (
+                                    <Post
+                                        key={index}
+                                        postId={post.id}
+                                        isInUserProfile={true}
+                                        setTriggerRefresh={setTriggerRefresh}
+                                        triggerRefresh={triggerRefresh}
+                                    />
+                                )
+                            })
+                        }
                     </div>
-                    <button className="edit-profile-btn" onClick={() => setShowEditModal(true)}>edit</button>
-
-                    <div className="user-stats">
-                        <h3>Searchable Qualities</h3>
-                        <p>Username: <span>{userData && userData?.username}</span></p>
-                        <p>Email: <span>{userData && userData?.email}</span></p>
-                        <p>Relationship Status: <span>{userData && userData?.relationshipStatus}</span></p>
-                        <p>School: <span>{userData && userData?.school}</span></p>
-                        <p>Work: <span>{userData && userData?.work}</span></p>
-                        <p>Currently Learning: <span>{userData && userData?.currentlyLearning}</span></p>
-                        <p>Hobbies: <span>{userData && userData?.hobbies}</span></p>
-                        <p>Pet Peeve: <span>{userData && userData?.petPeeve}</span></p>
-                    </div>
-                </section>
+                </main>
+                :
+                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
             }
-
-
-            {/* User Posts */}
-            <h2 className="section-heading"><span>My Posts</span></h2>
-
-            <div className="user-post-container">
-                {userData &&
-                    userData?.Posts.map((post, index) => {
-                        return (
-                            <Post
-                                key={index}
-                                postId={post.id}
-                                isInUserProfile={true}
-                                setTriggerRefresh={setTriggerRefresh}
-                                triggerRefresh={triggerRefresh}
-                            />
-                        )
-                    })
-                }
-            </div>
-        </main>
+        </>
     )
 
 }

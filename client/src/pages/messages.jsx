@@ -22,22 +22,29 @@ function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
 
 
     return (
-        <main>
-        { userData && 
-            showCreateChatModal &&
-                <CreateChatModal
-                    triggerModal={setShowCreateChatModal}
-                />
+        <>
+            {userData?.id ?
+                <main>
+                    {userData &&
+                        showCreateChatModal &&
+                        <CreateChatModal
+                            triggerModal={setShowCreateChatModal}
+                        />
+                    }
+                    <button className="submit-btn" id="create-chatroom-btn" onClick={() => setShowCreateChatModal(true)}>New Chat+</button>
+                    <ChatBox
+                        username={userData?.username}
+                        userId={userData?.id}
+                        triggerModalStatus={showCreateChatModal}
+                        triggerRefreshAmongPages={triggerRefreshAmongPages}
+                        setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
+                    />
+                </main>
+                :
+                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+
             }
-            <button className="submit-btn" id="create-chatroom-btn" onClick={() => setShowCreateChatModal(true)}>New Chat+</button>
-            <ChatBox
-                username={userData?.username}
-                userId={userData?.id}
-                triggerModalStatus={showCreateChatModal}
-                triggerRefreshAmongPages={triggerRefreshAmongPages}
-                setTriggerRefreshAmongPages={setTriggerRefreshAmongPages}
-            />
-        </main>
+        </>
 
 
     )

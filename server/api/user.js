@@ -749,6 +749,15 @@ router.put('/resetPassword', async(req, res) => {
         findUser.password = req.body.password;
         await findUser.save();
 
+        // destry token 
+        const oldToken = await TempResetToken.findOne({
+            where: {
+                userId: findUser.id
+            }
+        });
+
+        await oldToken.destroy();
+        
         res.status(200).json(findUser);
     }catch(err) {
         res.status(500).json({err})
