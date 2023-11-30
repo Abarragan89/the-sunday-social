@@ -1,7 +1,7 @@
 
   # The Sunday Social [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ## Description
- This is a social media app I created for people who don't use social media. The Sunday Social is for those who want to be on social media one day out of the week... Sunday. It's a layback-beach vibe place where you can make a profile, find friends through searchable traits (i.e. relationship status, username, hobbies, school, work, etc.), make posts, comment on posts, like posts, and message friends. The messaging component utilizes Socket.io to create a real time messaging experience, no refresh or reload needed. Make an account and join the wave today! 
+ This is a social media app for people who don't use social media. The Sunday Social is for those who want to be on social media one day out of the week... Sunday. It's a layback-beach vibe place where you can make a profile, find friends through searchable traits (i.e. relationship status, username, hobbies, school, work, etc.), make posts, comment on posts, like posts, and message friends. The messaging component utilizes Socket.io to create a real time messaging experience, no refresh or reload needed. Make an account and join the wave today! 
   ![markdown logo](/screenshot.png)
 
 
