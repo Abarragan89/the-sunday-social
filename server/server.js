@@ -74,9 +74,6 @@ db.sync({ force: false })
 
 
 
-
-
-
 // DELETE USER
 // Put Project on My Portfolio
 // Post on linkedIn

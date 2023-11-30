@@ -42,6 +42,7 @@ async function resetPassword(toUser, tempToken) {
                 <h3>Hello ${toUser.username},</h3>
                 <p>Seems like you forgot something...</p>
                 <p>Click the link to reset your password. <a target="_" href="${process.env.DOMAIN}passwordReset/${tempToken.tokenId}" rel="noopener noreferrer">Reset Password</a> </p>
+                <p>If the link is unclickable, paste this url in your browswer: ${process.env.DOMAIN}passwordReset/${tempToken.tokenId}</p>
                 <p>Thank you,</p>
                 <p>-The Sunday Social</p>
             `
