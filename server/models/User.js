@@ -26,12 +26,10 @@ User.init(
         username: {
             type: DataTypes.STRING(20),
             allowNull: false,
-            unique: true
         },
         email: {
             type: DataTypes.STRING(50),
             allowNull: false,
-            unique: true
         },
         profilePic: {
             type: DataTypes.STRING,
@@ -86,10 +84,22 @@ User.init(
             allowNull: true,
             defaultValue: 'N/A',
             validate: { len: [0, 30] }
-        }
+        },
+        
     },
     // OPTIONS / CONFIG
     {
+        indexes: [
+            {
+                unique: true,
+                fields: ['username']
+            },
+            {
+                unique: true,
+                fields: ['email']
+            }
+        ],
+
         hooks: {
             beforeCreate: async (newUserData) => {
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
