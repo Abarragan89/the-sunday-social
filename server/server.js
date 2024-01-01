@@ -70,9 +70,3 @@ db.sync({ alter: false, force: false })
   .catch((error) => {
     console.error('Error connecting to the database:', error);
   });
-
-
-
-// DELETE USER
-// Put Project on My Portfolio
-// Post on linkedIn
