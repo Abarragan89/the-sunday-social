@@ -38,16 +38,16 @@ io.on('connection', (socket) => {
   })
 
   // Add cleanup code here for removing event listeners when no longer needed
-  const cleanupListeners = () => {
-    socket.off('join_room');
-    socket.off('leave_room');
-    socket.off('send_message');
-  };
+  // const cleanupListeners = () => {
+  //   socket.off('join_room');
+  //   socket.off('leave_room');
+  //   socket.off('send_message');
+  // };
 
-  // Example: remove listeners on socket disconnect
-  socket.on('disconnect', () => {
-    cleanupListeners();
-  });
+  // // Example: remove listeners on socket disconnect
+  // socket.on('disconnect', () => {
+  //   cleanupListeners();
+  // });
 
 })
 
@@ -70,7 +70,7 @@ if (process.env.NODE_ENV === 'production') {
 
 db.sync({ alter: false, force: false })
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
     });
   })
