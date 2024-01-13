@@ -37,6 +37,18 @@ io.on('connection', (socket) => {
     socket.to(data.chatId).emit('recieve_message', data)
   })
 
+  // Add cleanup code here for removing event listeners when no longer needed
+  const cleanupListeners = () => {
+    socket.off('join_room');
+    socket.off('leave_room');
+    socket.off('send_message');
+  };
+
+  // Example: remove listeners on socket disconnect
+  socket.on('disconnect', () => {
+    cleanupListeners();
+  });
+
 })
 
 app.use(express.urlencoded({ extended: false }));
