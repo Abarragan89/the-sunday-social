@@ -70,7 +70,7 @@ if (process.env.NODE_ENV === 'production') {
 
 db.sync({ alter: false, force: false })
   .then(() => {
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
     });
   })
