@@ -13,7 +13,6 @@ const PORT = process.env.PORT || 3001;
 const server = http.createServer(app)
 app.use(cors());
 
-
 const io = new Server(server, {
   cors: {
     origin: process.env.NODE_ENV === 'production' ? 'https://the-sunday-social-b780c9b989cc.herokuapp.com/' : 'http://localhost:5173',
@@ -22,7 +21,6 @@ const io = new Server(server, {
 })
 
 io.on('connection', (socket) => {
-
   // set a join room event. The front end will first join room 
   socket.on('join_room', (data) => {
     socket.join(data)
@@ -60,9 +58,6 @@ if (process.env.NODE_ENV === 'production') {
 
 db.sync({ alter: false, force: false })
   .then(() => {
-    console.log('Database connected successfully');
-    // Enable Sequelize query logging
-    db.options.logging = console.log;
     server.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
     });
