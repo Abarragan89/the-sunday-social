@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import CreateChatModal from "../components/CreateChatModal";
 import ChatBox from "../components/ChatBox";
+import LoadingIcon from "../components/LoadingIcon";
+import { authStatusContext } from "../store/auth";
+
 
 
 function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
@@ -9,6 +12,7 @@ function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
     const [showCreateChatModal, setShowCreateChatModal] = useState(false);
     const [userData, setUserData] = useState(null);
 
+    const { isLoggedIn } = useContext(authStatusContext);
 
     useEffect(() => {
         async function getUserData() {
@@ -16,13 +20,15 @@ function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
             const data = await rawData.json();
             setUserData(data);
         }
-
         getUserData();
     }, [])
 
 
     return (
         <>
+            {isLoggedIn === null &&
+                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+            }
             {userData?.id ?
                 <main>
                     {userData &&
@@ -41,8 +47,7 @@ function Messages({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
                     />
                 </main>
                 :
-                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
-
+                isLoggedIn && <LoadingIcon />
             }
         </>
 

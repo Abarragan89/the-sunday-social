@@ -7,7 +7,8 @@ import Friends from './pages/friends'
 import FriendProfilePage from './pages/friendProfile'
 import ResetPasswordPage from './pages/resetPasswordPage'
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import UserAuthProvider from './store/auth'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <>
+    <UserAuthProvider>
       <BrowserRouter>
       <Header triggerRefreshAmongPages={triggerRefreshAmongPages} />
         <Routes>
@@ -35,6 +37,7 @@ function App() {
           <Route path='/passwordReset/:tokenId' element={<ResetPasswordPage />} />
         </Routes>
       </BrowserRouter>
+    </UserAuthProvider>
     </>
   )
 }

@@ -4,13 +4,17 @@ import FloatingButton from "../components/FloatingBtn";
 import Post from "../components/Post";
 import { useNavigate } from "react-router-dom";
 import EditProfileModal from "../components/EditProfileModal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { IoCloudUpload } from 'react-icons/io5'
 import { FaCheckCircle } from "react-icons/fa";
 import Axios from 'axios';
 import { Image } from 'cloudinary-react';
+import { authStatusContext } from "../store/auth";
+import LoadingIcon from "../components/LoadingIcon";
 
 function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
+    const authContext = useContext(authStatusContext);
+
     const navigate = useNavigate();
 
     // these two use state variable are paired with the floating button
@@ -76,7 +80,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) 
             await fetch('/api/auth/logout', {
                 method: 'POST'
             });
-            localStorage.removeItem('token');
+            authContext.logoutUser();
             navigate('/');
             setTriggerRefreshAmongPages(!triggerRefreshAmongPages)
         } catch (err) {
@@ -84,8 +88,11 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) 
         }
     }
     return (
-        <>
-            {userData?.id ?
+        <>  
+        {authContext.isLoggedIn === null && 
+            <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+        }
+            {userData?.id && authContext.isLoggedIn ?
                 <main>
                     {/* FLOATING BUTTON */}
                     {showAddPostModal &&
@@ -178,7 +185,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) 
                     </div>
                 </main>
                 :
-                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+                authContext.isLoggedIn && <LoadingIcon />
             }
         </>
     )

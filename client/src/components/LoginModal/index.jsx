@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { FallingLines } from 'react-loader-spinner';
 import { ToastContainer, toast } from "react-toastify";
+import { authStatusContext } from "../../store/auth";
 import './index.css'
 
 function LoginModal({ setShowModal }) {
+
+    const authContext = useContext(authStatusContext);
 
     const showToastMessage = (errorMsg, toastId) => {
         toast.error(errorMsg, {
@@ -86,6 +89,7 @@ function LoginModal({ setShowModal }) {
                 showToastMessage(response.error, 'nosignup')
             } else {
                 window.location.reload();
+                authContext.loginUser();
             }
         } catch (err) {
             console.log('error sign up user ', err)
@@ -113,6 +117,7 @@ function LoginModal({ setShowModal }) {
                 setIsLoading(false)
             } else {
                 window.location.reload();
+                authContext.loginUser();
             }
         } catch (err) {
             console.log('error sign up user ', err)

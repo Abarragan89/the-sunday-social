@@ -4,6 +4,7 @@ import FloatingButton from "../components/FloatingBtn";
 import Post from "../components/Post";
 import AddPostModal from "../components/AddPostModal";
 import MostPost from "../components/MostPost";
+import LoadingIcon from "../components/LoadingIcon";
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -72,46 +73,49 @@ function HomePage() {
             }
 
             <h1 className="page-heading">The Sunday Feed</h1>
-
             <section className="main-section-homepage">
 
-                {/* ALL POSTS */}
-                <div className="homepage-post-div">
-                    {allPosts &&
-                        allPosts.map((post, index) => {
-                            return (
-                                <Post
-                                    postId={post?.id}
-                                    key={index}
-                                    isInUserProfile={false}
-                                    refreshMostPosts={refreshMostPosts}
-                                    setRefreshMostPosts={setRefreshMostPosts}
-                                />
-                            )
-                        })
-                    }
-                </div>
+                {!allPosts || !mostCommentedPosts || !mostLikedPosts ?
+                    <LoadingIcon />
+                    :
+                    <>
+                        <div className="homepage-post-div">
+                            {allPosts &&
+                                allPosts.map((post, index) => {
+                                    return (
+                                        <Post
+                                            postId={post?.id}
+                                            key={index}
+                                            isInUserProfile={false}
+                                            refreshMostPosts={refreshMostPosts}
+                                            setRefreshMostPosts={setRefreshMostPosts}
+                                        />
+                                    )
+                                })
+                            }
+                        </div>
+                        <aside className="most-post-aside">
+                            {/*  Most Liked */}
+                            <MostPost
+                                title={'Favorited'}
+                                posts={mostLikedPosts}
+                                refreshMostPosts={refreshMostPosts}
+                                setRefreshMostPosts={setRefreshMostPosts}
+                            />
 
-                <aside className="most-post-aside">
-                    {/*  Most Liked */}
-                    <MostPost
-                        title={'Favorited'}
-                        posts={mostLikedPosts}
-                        refreshMostPosts={refreshMostPosts}
-                        setRefreshMostPosts={setRefreshMostPosts}
-                    />
+                            {/* Most Talked about */}
+                            <MostPost
+                                title={'Trending'}
+                                posts={mostCommentedPosts}
+                                refreshMostPosts={refreshMostPosts}
+                                setRefreshMostPosts={setRefreshMostPosts}
+                            />
+                        </aside>
+                    </>
+                }
 
-                    {/* Most Talked about */}
-                    <MostPost
-                        title={'Trending'}
-                        posts={mostCommentedPosts}
-                        refreshMostPosts={refreshMostPosts}
-                        setRefreshMostPosts={setRefreshMostPosts}
-                    />
-                </aside>
+
             </section>
-
-
         </main>
     )
 }

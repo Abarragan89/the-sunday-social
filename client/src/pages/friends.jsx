@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import AddPostModal from "../components/AddPostModal";
 import FloatingButton from "../components/FloatingBtn";
 import FriendFinder from "../components/FriendFinder";
 import FriendRequests from "../components/FriendRequests";
+import { authStatusContext } from "../store/auth";
+import LoadingIcon from "../components/LoadingIcon";
 
 function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
+
+    const { isLoggedIn } = useContext(authStatusContext)
 
     // these two use state variable are paired with the floating button
     const [showAddPostModal, setShowAddPostModal] = useState(false)
@@ -25,6 +29,9 @@ function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
 
     return (
         <>
+        {isLoggedIn === null &&
+            <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+        }
             {userData?.id ?
                 <main>
                     {showAddPostModal &&
@@ -56,7 +63,7 @@ function FriendPage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) {
                     </main>
                 </main>
                 :
-                <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
+                isLoggedIn && <LoadingIcon />
             }
         </>
 
