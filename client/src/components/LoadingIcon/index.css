@@ -1,8 +1,9 @@
 .loading-icon-div {
-    margin-top: 50px;
-  }
-  
-  .loading-icon-div p {
-    color: var(--accent-color);
-    font-style: italic;
-  }
+  text-align: center;
+  margin-top: 50px;
+}
+
+.loading-icon-div p {
+  color: var(--accent-color);
+  font-style: italic;
+}
