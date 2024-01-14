@@ -92,7 +92,7 @@ function ProfilePage({ triggerRefreshAmongPages, setTriggerRefreshAmongPages }) 
         {authContext.isLoggedIn === null && 
             <p className="sign-in-to-view-page-text">You need to <span>sign in </span> to view this page</p>
         }
-            {userData?.id && authContext.isLoggedIn ?
+            {userData?.id ?
                 <main>
                     {/* FLOATING BUTTON */}
                     {showAddPostModal &&
