@@ -99,6 +99,7 @@ function HomePage() {
                             <MostPost
                                 title={'Favorited'}
                                 posts={mostLikedPosts}
+                                isUserLoggedIn={userData.id}
                                 refreshMostPosts={refreshMostPosts}
                                 setRefreshMostPosts={setRefreshMostPosts}
                             />
@@ -107,6 +108,7 @@ function HomePage() {
                             <MostPost
                                 title={'Trending'}
                                 posts={mostCommentedPosts}
+                                isUserLoggedIn={userData.id}
                                 refreshMostPosts={refreshMostPosts}
                                 setRefreshMostPosts={setRefreshMostPosts}
                             />

@@ -4,7 +4,7 @@ import ViewPostModal from '../ViewPostModal';
 import { Image } from 'cloudinary-react';
 import { useState } from 'react';
 
-function MostPost({ title, posts, refreshMostPosts, setRefreshMostPosts }) {
+function MostPost({ title, posts, refreshMostPosts, setRefreshMostPosts, isUserLoggedIn }) {
     const [showModal, setShowModal] = useState(false)
     const [postId, setPostId] = useState(null)
 
@@ -15,6 +15,7 @@ function MostPost({ title, posts, refreshMostPosts, setRefreshMostPosts }) {
                 <ViewPostModal
                     triggerModal={setShowModal}
                     postId={postId}
+                    isUserLoggedIn={isUserLoggedIn}
                     refreshMostPosts={refreshMostPosts}
                     setRefreshMostPosts={setRefreshMostPosts}
                 />
