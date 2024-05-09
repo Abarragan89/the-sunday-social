@@ -7,7 +7,8 @@ import { getTime } from "../../utils/formatDate";
 import { IoMdSend, IoIosMore } from 'react-icons/io'
 import io from 'socket.io-client';
 const socket = io.connect('https://the-sunday-social-b780c9b989cc.herokuapp.com/');
-import './index.css'
+import './index.css';
+
 
 function ChatBox({
     username,

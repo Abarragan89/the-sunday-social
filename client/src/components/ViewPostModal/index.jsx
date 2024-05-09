@@ -6,16 +6,16 @@ import { Image } from 'cloudinary-react';
 import './index.css';
 
 // all these refreshes refresh different components
-function ViewPostModal({ 
-    triggerModal, 
-    postId, 
-    postRefresh, 
-    postStatus, 
-    isInEditMode, 
-    setTriggerRefresh, 
-    triggerRefresh, 
-    refreshMostPosts, 
-    setRefreshMostPosts 
+function ViewPostModal({
+    triggerModal,
+    postId,
+    postRefresh,
+    postStatus,
+    isInEditMode,
+    setTriggerRefresh,
+    triggerRefresh,
+    refreshMostPosts,
+    setRefreshMostPosts
 }) {
 
     const [postData, setPostData] = useState(null);
@@ -93,7 +93,7 @@ function ViewPostModal({
         }
     }
 
-    
+
 
     async function editPostHandler() {
         try {
@@ -140,17 +140,17 @@ function ViewPostModal({
                 triggerModal(false);
                 setTriggerRefresh(!triggerRefresh)
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
 
     return (
-        <section onClick={() => {triggerModal(false)}} className='modal-container'>
+        <section onClick={() => { triggerModal(false) }} className='modal-container'>
             <div onClick={(e) => e.stopPropagation()} className='modal'>
                 {/* check to see if we are in edit mode */}
-                {isInEditMode ?
+                {isInEditMode && updatedPostText ?
                     <>
                         <h3 className='modal-title'>Edit Post</h3>
                         <div className='post-form-textarea-div'>
@@ -200,9 +200,9 @@ function ViewPostModal({
                                 <div key={index} className='single-comment-div'>
                                     <div className='user-comment-info'>
                                         <div className='flex-box'>
-                                        <figure>
-                                        <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={comment?.User?.profilePic} />
-                                        </figure>
+                                            <figure>
+                                                <Image alt='user profile picture' className='profile-pic' cloudName='dp6owwg93' publicId={comment?.User?.profilePic} />
+                                            </figure>
                                             <div>
                                                 <p>{comment?.User?.username}</p>
                                                 <p>{formatDate(comment?.createdAt)}</p>
@@ -217,8 +217,6 @@ function ViewPostModal({
 
                     </div>
                 }
-
-
                 {/* only show comment box if user is logged in */}
                 {isUserLoggedIn && !isInEditMode ?
                     <div className='comment-textarea-div'>

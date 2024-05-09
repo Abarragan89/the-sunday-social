@@ -113,8 +113,6 @@ function HomePage() {
                         </aside>
                     </>
                 }
-
-
             </section>
         </main>
     )
