@@ -22,13 +22,11 @@ function ResetPasswordPage() {
         try {
             const data = await fetch(`/api/user/verifyUserByToken/${tokenId}`);
             const response = await data.json();
-            console.log(response)
             setUserData(response)
         } catch(err) {
             console.log(err)
         }
     }
-    console.log(tokenId)
 
     async function resetPasswordHandler(e) {
         e.preventDefault();

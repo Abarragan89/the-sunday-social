@@ -9,7 +9,7 @@ import { Image } from 'cloudinary-react';
 
 // triggerRefresh is for refreshing the profile page on change
 // refresh is to refresh the post data when in view single post modal
-function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refreshMostPosts, setRefreshMostPosts }) {
+function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, isUserLoggedIn }) {
     const [showModal, setShowModal] = useState(false)
     const [postData, setPostData] = useState(null)
     const [refresh, setRefresh] = useState(false);
@@ -45,7 +45,7 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
                 showToastMessage(response.error)
             }
             if (response) {
-                setRefreshMostPosts(!refreshMostPosts)
+                setTriggerRefresh(!triggerRefresh)
                 setRefresh(!refresh)
             }
         } catch (err) {
@@ -94,6 +94,7 @@ function Post({ postId, isInUserProfile, setTriggerRefresh, triggerRefresh, refr
                     isInEditMode={isInUserProfile}
                     setTriggerRefresh={setTriggerRefresh}
                     triggerRefresh={triggerRefresh}
+                    isUserLoggedIn={isUserLoggedIn}
                 />
             }
 

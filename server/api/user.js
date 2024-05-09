@@ -22,14 +22,7 @@ const {
 // the 'verifyToken' sets the req.user to have user information
 router.get('/', verifyToken, async (req, res) => {
     try {
-        const user = await User.findByPk(req.user.data.id, {
-            attributes: ['profilePic', 'username', 'id']
-        });
-
-        if (!user) {
-            return res.status(400).json({ error: 'you must log in' })
-        }
-        res.status(200).json(user)
+        res.status(200).json(req.user.data)
     } catch (err) {
         res.status(500).json({ error: 'user not found' })
     }

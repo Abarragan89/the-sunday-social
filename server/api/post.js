@@ -89,7 +89,7 @@ router.get('/getSingleViewPost/:id', async (req, res) => {
     }
 })
 
-// get most lieked posts
+// get most liked posts
 router.get('/mostLikedPosts', async (req, res) => {
     try {
         const mostLikedPosts = await Post.findAll({

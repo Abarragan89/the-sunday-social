@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function HomePage() {
 
     const [userData, setUserData] = useState(null);
-
     // these two use state variable are paired with the floating button
     const [showAddPostModal, setShowAddPostModal] = useState(false)
     const [makeButtonDisappear, setMakeButtonDisappear] = useState(false);
@@ -75,7 +74,7 @@ function HomePage() {
             <h1 className="page-heading">The Sunday Feed</h1>
             <section className="main-section-homepage">
 
-                {!allPosts || !mostCommentedPosts || !mostLikedPosts ?
+                {!allPosts || !mostCommentedPosts || !mostLikedPosts || !userData ?
                     <LoadingIcon />
                     :
                     <>
@@ -86,9 +85,10 @@ function HomePage() {
                                         <Post
                                             postId={post?.id}
                                             key={index}
+                                            isUserLoggedIn={userData.id}
                                             isInUserProfile={false}
-                                            refreshMostPosts={refreshMostPosts}
-                                            setRefreshMostPosts={setRefreshMostPosts}
+                                            setTriggerRefresh={setRefreshMostPosts}
+                                            triggerRefresh={refreshMostPosts}
                                         />
                                     )
                                 })

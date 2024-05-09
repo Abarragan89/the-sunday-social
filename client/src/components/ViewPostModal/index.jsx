@@ -15,23 +15,15 @@ function ViewPostModal({
     setTriggerRefresh,
     triggerRefresh,
     refreshMostPosts,
-    setRefreshMostPosts
+    setRefreshMostPosts,
+    isUserLoggedIn
 }) {
 
     const [postData, setPostData] = useState(null);
     const [updatedPostText, setUpdatedPostText] = useState('');
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
     const [confirmDeletePost, setConfirmDeletePost] = useState(false);
     const [refresh, setRefresh] = useState(false);
 
-
-    async function getUserData() {
-        const rawData = await fetch('/api/user');
-        const data = await rawData.json();
-        if (data?.username) {
-            setIsUserLoggedIn(true)
-        }
-    }
     async function getSinglePost() {
         const rawData = await fetch(`/api/post/getSingleViewPost/${postId}`);
         const response = await rawData.json();
@@ -40,7 +32,6 @@ function ViewPostModal({
     }
     useEffect(() => {
         getSinglePost();
-        getUserData();
     }, [postId, refresh])
 
 

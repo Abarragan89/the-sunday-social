@@ -5,8 +5,8 @@ const secret = process.env.JWT_SECRET;
 const expirtion = '7d';
 
 module.exports = {
-    signToken: function ({ email, id, username}, res) {
-        const payload = { email, id, username}
+    signToken: function ({ email, id, username, profilePic }, res) {
+        const payload = { email, id, username, profilePic }
 
         const token = jwt.sign({ data: payload }, secret, { expiresIn: expirtion});
 

@@ -52,7 +52,6 @@ function EditProfileModal({ setShowModal, userData, triggerRefresh, setTriggerRe
 
             const response = await data.json();
             if(response.error) {
-                console.log(response.error)
                 return
             }
             setTriggerRefresh(!triggerRefresh);
