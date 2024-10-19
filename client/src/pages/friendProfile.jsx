@@ -18,7 +18,6 @@ function FriendProfilePage() {
     const [userData, setUserData] = useState(null)
     const [showEditModal, setShowEditModal] = useState(false)
 
-
     useEffect(() => {
         async function getUserInfo() {
             try {
