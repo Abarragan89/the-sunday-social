@@ -23,6 +23,7 @@ function HomePage() {
     async function getUserData() {
         const rawData = await fetch('/api/user');
         const data = await rawData.json();
+        console.log('userdata ', data)
         setUserData(data);
     }
     async function getAllPosts() {

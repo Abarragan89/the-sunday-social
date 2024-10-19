@@ -69,8 +69,8 @@ function ChatBox({
 
     useEffect(() => {
         if (chatId && userId) {
-            removeAllNotifications(chatId);
-            getMessages(chatId);
+            removeAllNotifications(pasrseInt(chatId));
+            getMessages(parseInt(chatId));
             socket.emit('join_room', chatId)
             // leave room so messages don't render if you switch chat channel!!!!
             return () => {

@@ -28,7 +28,6 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
     let [messageNotifications, setMessageNotifications] = useState(0);
     let [postNotifications, setPostNotifications] = useState(0);
 
-
     async function getUserData() {
         try {
             const rawData = await fetch('/api/user');
@@ -63,8 +62,10 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
     }, [triggerRefreshAmongPages])
 
     useEffect(() => {
-        getUserPostNotifications();
-        getUserMessageNotifications();
+        if (userData && userData.message !== 'Unauthorized') {
+            getUserPostNotifications();
+            getUserMessageNotifications();
+        }
     }, [href])
 
     return (
@@ -125,9 +126,7 @@ function NavLinks({ closeHamburger, isMobile, triggerRefreshAmongPages }) {
                         </nav>
                     }
                 </>
-
             }
-
         </>
     )
 }
