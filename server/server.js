@@ -45,7 +45,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/api', api);
 
-
 if (process.env.NODE_ENV === 'production') {
   // serves react app when in production
   app.use(express.static(path.join(__dirname, '../client/dist')));
